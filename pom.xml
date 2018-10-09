@@ -37,6 +37,8 @@
         <dynamic.datasource.version>2.2.1</dynamic.datasource.version>
         <mysql.version>5.1.46</mysql.version>
         <druid.boot.version>1.1.10</druid.boot.version>
+        <velocity.version>2.0</velocity.version>
+        <swagger2.version>2.7.0</swagger2.version>
     </properties>
 
     <dependencies>
