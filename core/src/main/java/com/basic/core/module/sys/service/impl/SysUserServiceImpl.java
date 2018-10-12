@@ -34,7 +34,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
      * @param user
      */
     @Override
-    @Transactional(rollbackFor = )
+    @Transactional(rollbackFor = Exception.class)
     public void save(SysUserAdd user) {
         SysUser newUser = new SysUser();
         BeanUtils.copyProperties(user,newUser);
