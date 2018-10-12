@@ -1,5 +1,6 @@
-package com.basic.core.module.demo.entity;
+package com.basic.core.module.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.basic.core.mvc.entity.BaseEntity;
 import lombok.Data;
@@ -8,31 +9,29 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * demo表
+ * 角色菜单关联表
  * </p>
  *
  * @author wenlongfei
- * @since 2018-09-26
+ * @since 2018-10-12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("my_demo")
-public class Demo extends BaseEntity<Demo> {
+@TableName("sys_role_menu")
+public class SysRoleMenu extends BaseEntity<SysRoleMenu> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 姓名
+     * 角色ID
      */
-    private String name;
+    @TableField("role_id")
+    private Long roleId;
     /**
-     * 年龄
+     * 菜单ID
      */
-    private Integer age;
-    /**
-     * 备注
-     */
-    private String remark;
+    @TableField("menu_id")
+    private Long menuId;
 
 }

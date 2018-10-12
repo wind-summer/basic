@@ -1,5 +1,6 @@
-package com.basic.core.module.demo.entity;
+package com.basic.core.module.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.basic.core.mvc.entity.BaseEntity;
 import lombok.Data;
@@ -8,31 +9,29 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * demo表
+ * 用户角色关联表
  * </p>
  *
  * @author wenlongfei
- * @since 2018-09-26
+ * @since 2018-10-12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("my_demo")
-public class Demo extends BaseEntity<Demo> {
+@TableName("sys_user_role")
+public class SysUserRole extends BaseEntity<SysUserRole> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 姓名
+     * 用户ID
      */
-    private String name;
+    @TableField("user_id")
+    private Long userId;
     /**
-     * 年龄
+     * 角色ID
      */
-    private Integer age;
-    /**
-     * 备注
-     */
-    private String remark;
+    @TableField("role_id")
+    private Long roleId;
 
 }

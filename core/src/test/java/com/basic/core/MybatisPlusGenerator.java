@@ -20,14 +20,15 @@ public class MybatisPlusGenerator {
 
 
     private static String AUTHOR = "wenlongfei";
-    private static String OUTPUT_DIR = "/home/wenlongfei/Desktop/code/";
+    //private static String OUTPUT_DIR = "/home/wenlongfei/Desktop/code/";
+    private static String OUTPUT_DIR = "C:/code";
 
     private static String MYSQL_URL = "jdbc:mysql://127.0.0.1:3306/framework?characterEncoding=utf8";
     private static String MYSQL_USER = "root";
     private static String MYSQL_PWD = "123456";
 
-    private static String MODULE_NAME = "demo";
-    private static String[] INCLUDE_TABLES = new String[]{"my_demo"};
+    private static String MODULE_NAME = "sys";
+    private static String[] INCLUDE_TABLES = new String[]{"sys_user_token","sys_user","sys_user_role","sys_role","sys_menu","sys_role_menu"};
 
     /**
      * <p>
@@ -166,7 +167,7 @@ public class MybatisPlusGenerator {
                     // 自定义输出文件目录
                     @Override
                     public String outputFile(TableInfo tableInfo) {
-                        return OUTPUT_DIR+"resources/mapper/"+MODULE_NAME+"/" + tableInfo.getEntityName() + ".xml";
+                        return OUTPUT_DIR+"/resources/mapper/"+MODULE_NAME+"/" + tableInfo.getEntityName() + ".xml";
                     }
                 }))
         );

@@ -1,8 +1,8 @@
-package com.my.core.oauth2;
+package com.basic.core.oauth2;
 
+import com.basic.core.config.ApplicationProperties;
+import com.basic.core.utils.ApiResult;
 import com.google.gson.Gson;
-import com.my.common.utils.ApiResult;
-import com.my.core.config.ApplicationProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;

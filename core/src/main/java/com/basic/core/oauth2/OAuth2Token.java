@@ -1,4 +1,4 @@
-package com.my.core.oauth2;
+package com.basic.core.oauth2;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

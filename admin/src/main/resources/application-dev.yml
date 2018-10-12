@@ -60,3 +60,13 @@ application:
     description: API是一个基于Rest规范的开发API平台,响应数据统一格式：其中code等于0成功，非0错误，错误信息见msg。{"code":0,"msg":"string","data":{}}
     license: Apache license
     version: 1.0
+  #权限安全配置
+  security:
+    # Token 有效时间，单位秒
+    tokenExpire: 86400
+    # 客户默认初始密码
+    defaultPassword: 123456
+    # 默认管理员id,多个用逗号分隔
+    adminIds: 1,2,3
+    # 密码错误次数
+    errorNum: 3

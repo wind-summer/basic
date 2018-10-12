@@ -1,8 +1,8 @@
-package com.my.core.oauth2;
+package com.basic.core.oauth2;
 
-import com.my.core.sys.entity.SysUser;
-import com.my.core.sys.entity.SysUserToken;
-import com.my.core.sys.service.ShiroService;
+import com.basic.core.module.sys.entity.SysUser;
+import com.basic.core.module.sys.entity.SysUserToken;
+import com.basic.core.module.sys.service.ShiroService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
