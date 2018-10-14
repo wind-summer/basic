@@ -1,5 +1,7 @@
 package com.basic.core.module.sys.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.basic.core.module.sys.constant.SysUserStatus;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
@@ -36,13 +38,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(SysUserAdd user) {
+        //判断添加的账户已经存在
+        Integer count = this.baseMapper.selectCount(new EntityWrapper<SysUser>().eq("username", user.getUsername()));
+        if(count > 0 ){
+            throw new com.my.common.exception.BizException("该账户已存在，请更换账户");
+        }
+
         SysUser newUser = new SysUser();
         BeanUtils.copyProperties(user,newUser);
         newUser.setCreateTime(new Date());
         //sha256加密
-        String salt = RandomStringUtils.randomAlphanumeric(20);
+        String salt = RandomStringUtils.randomAlphanumeric(4);
         newUser.setPassword(new Sha256Hash(user.getPassword(), salt).toHex());
-        newUser.setSalt(salt);
+        newUser.setSalt(salt).setStatus(SysUserStatus.ENABLE.getValue());
         sysUserDao.insert(newUser);
 
         //保存用户与角色关系
