@@ -29,11 +29,6 @@ public class SysUser extends BaseEntity<SysUser> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户ID
-     */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Long userId;
-    /**
      * 账户
      */
     private String username;

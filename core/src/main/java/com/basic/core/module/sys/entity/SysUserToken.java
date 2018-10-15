@@ -30,7 +30,7 @@ public class SysUserToken extends BaseEntity<SysUserToken> {
     /**
      * 用户ID
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
+    @TableField("user_id")
     private Long userId;
     /**
      * token

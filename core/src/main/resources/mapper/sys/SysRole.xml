@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.basic.core.module.sys.entity.SysRole">
-        <id column="role_id" property="roleId" />
+        <result column="id" property="id" />
         <result column="role_name" property="roleName" />
         <result column="remark" property="remark" />
         <result column="dept_id" property="deptId" />

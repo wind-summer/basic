@@ -28,11 +28,6 @@ public class SysRole extends BaseEntity<SysRole> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 角色ID
-     */
-    @TableId(value = "role_id", type = IdType.AUTO)
-    private Long roleId;
-    /**
      * 角色名称
      */
     @TableField("role_name")

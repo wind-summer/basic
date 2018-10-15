@@ -65,7 +65,8 @@ public class ShiroServiceImpl implements ShiroService {
      */
     @Override
     public SysUserToken queryByToken(String token) {
-        return (SysUserToken) sysUserTokenService.selectObj(new EntityWrapper<SysUserToken>().eq("token", token));
+        List<SysUserToken> tokens = sysUserTokenService.selectList(new EntityWrapper<SysUserToken>().eq("token", token));
+        return tokens.size() > 0 ? tokens.get(0) : null;
     }
 
     /**

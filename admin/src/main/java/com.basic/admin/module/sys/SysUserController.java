@@ -5,6 +5,7 @@ import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
 import com.basic.core.module.sys.service.SysUserService;
 import com.basic.core.mvc.controller.AbstractApiResultController;
+import com.basic.core.utils.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2018-10-12
  */
 @RestController
-@RequestMapping("/sys/sysUser")
+@RequestMapping("/sys/user")
 @AllArgsConstructor
 @Api(description = "用户管理")
 public class SysUserController extends AbstractApiResultController {
@@ -32,8 +33,9 @@ public class SysUserController extends AbstractApiResultController {
 
     @ApiOperation("添加用户")
     @PostMapping("/user")
-    public void save(@Validated SysUserAdd sysUser){
+    public ApiResult save(@Validated SysUserAdd sysUser){
         sysUserService.save(sysUser);
+        return ApiResult.ok("添加成功");
     }
 
     @ApiOperation("修改用户")

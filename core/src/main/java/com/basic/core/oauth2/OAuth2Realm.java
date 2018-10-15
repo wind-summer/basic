@@ -35,7 +35,7 @@ public class OAuth2Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SysUser user = (SysUser)principals.getPrimaryPrincipal();
-        Long userId = user.getUserId();
+        Long userId = user.getId();
 
         //用户权限列表
         Set<String> permsSet = shiroService.getUserPermissions(userId);

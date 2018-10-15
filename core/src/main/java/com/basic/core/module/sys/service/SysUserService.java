@@ -19,4 +19,11 @@ public interface SysUserService extends IService<SysUser> {
      * @param user
      */
     void save(SysUserAdd user);
+
+    /**
+     * 根据用户名查询用户
+     * @param username
+     * @return
+     */
+    SysUser queryByUserName(String username);
 }

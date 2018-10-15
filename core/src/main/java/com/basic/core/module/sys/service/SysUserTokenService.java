@@ -2,6 +2,7 @@ package com.basic.core.module.sys.service;
 
 import com.basic.core.module.sys.entity.SysUserToken;
 import com.baomidou.mybatisplus.service.IService;
+import com.basic.core.utils.ApiResult;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface SysUserTokenService extends IService<SysUserToken> {
 
+    /**
+     * 生成token
+     * @param userId
+     * @return
+     */
+    ApiResult createToken(Long userId);
 }

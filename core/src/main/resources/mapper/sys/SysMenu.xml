@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.basic.core.module.sys.entity.SysMenu">
-        <id column="menu_id" property="menuId" />
+        <result column="id" property="id" />
         <result column="parent_id" property="parentId" />
         <result column="name" property="name" />
         <result column="url" property="url" />

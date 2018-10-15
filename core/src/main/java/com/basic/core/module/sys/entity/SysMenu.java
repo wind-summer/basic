@@ -25,8 +25,6 @@ public class SysMenu extends BaseEntity<SysMenu> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "menu_id", type = IdType.AUTO)
-    private Long menuId;
     @TableField("parent_id")
     private Long parentId;
     private String name;

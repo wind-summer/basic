@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -54,6 +55,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         sysUserDao.insert(newUser);
 
         //保存用户与角色关系
-        sysUserRoleService.saveOrUpdate(newUser.getUserId(), newUser.getRoleIdList());
+        sysUserRoleService.saveOrUpdate(newUser.getId(), newUser.getRoleIdList());
+    }
+
+    /**
+     * 根据用户名查询用户
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public SysUser queryByUserName(String username) {
+        List<SysUser> userList = this.baseMapper.selectList(new EntityWrapper<SysUser>().eq("username", username));
+        return userList.size() > 0 ? userList.get(0) : null;
     }
 }
