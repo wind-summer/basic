@@ -57,4 +57,16 @@ public class SysLoginController {
         ApiResult r = sysUserTokenService.createToken(user.getId());
         return r;
     }
+
+    /**
+     * 用户登陆操作
+     * @param login
+     * @return
+     */
+    @ApiOperation("登陆")
+    @PostMapping("/sign_out")
+    public ApiResult logOut(@RequestBody SysLogin login) {
+
+        return ApiResult.ok();
+    }
 }

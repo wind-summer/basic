@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
+import com.basic.core.module.sys.entity.SysUser;
+import com.basic.core.utils.CurrentUserUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,6 +41,7 @@ public class DemoController extends AbstractApiResultController {
     @GetMapping("/test")
     @Transactional(rollbackFor = Exception.class)
     public void test(){
+        SysUser user = CurrentUserUtils.getLogin();
         valueOperations.set("name","张三");
         List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));
         /*Demo demo = new Demo();

@@ -20,4 +20,11 @@ public interface SysUserTokenService extends IService<SysUserToken> {
      * @return
      */
     ApiResult createToken(Long userId);
+
+    /**
+     * 根据token查询登陆用户
+     * @param token
+     * @return
+     */
+    SysUserToken queryByToken(String token);
 }

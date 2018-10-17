@@ -68,4 +68,14 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
         ApiResult r = ApiResult.ok().put("token", token).put("expire", applicationProperties.getSecurity().getTokenExpire());
         return r;
     }
+
+    /**
+     * 根据token查询登陆用户
+     * @param token
+     * @return
+     */
+    @Override
+    public SysUserToken queryByToken(String token) {
+        return this.selectOne(new EntityWrapper<SysUserToken>().eq("token", token));
+    }
 }
