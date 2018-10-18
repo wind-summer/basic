@@ -8,7 +8,6 @@ import com.basic.core.utils.ApiResult;
 import com.basic.core.utils.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -38,7 +37,7 @@ public class SysLoginController {
     private SysUserTokenService sysUserTokenService;
 
     @ApiOperation(value = "获取验证码图片-接口")
-    @RequestMapping("/captcha.jpg")
+    @GetMapping("/captcha.jpg")
     public void captcha(HttpServletResponse response) throws ServletException,IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
