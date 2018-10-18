@@ -41,6 +41,7 @@
         <swagger2.version>2.7.0</swagger2.version>
         <shiro.version>1.4.0</shiro.version>
         <guava.version>26.0-jre</guava.version>
+        <kaptcha.version>0.0.9</kaptcha.version>
     </properties>
 
     <dependencies>
