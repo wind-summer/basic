@@ -1,19 +1,21 @@
 package com.basic.admin.module.sys;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
 import com.basic.core.module.sys.service.SysUserService;
 import com.basic.core.mvc.controller.AbstractApiResultController;
+import com.basic.core.mvc.vm.PageVM;
 import com.basic.core.utils.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -30,6 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysUserController extends AbstractApiResultController {
 
     private SysUserService sysUserService;
+
+    @ApiOperation("用户列表")
+    @GetMapping("/users")
+    public PageVM page(){
+        List<SysUser> userList = sysUserService.selectList(new EntityWrapper<>());
+        PageVM pv = new PageVM(userList,userList.size(),10,1);
+        return pv;
+    }
 
     @ApiOperation("添加用户")
     @PostMapping("/user")

@@ -29,6 +29,10 @@ public class SysUser extends BaseEntity<SysUser> {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 姓名
+     */
+    private String name;
+    /**
      * 账户
      */
     private String username;
@@ -48,6 +52,10 @@ public class SysUser extends BaseEntity<SysUser> {
      * 移动电话
      */
     private String mobile;
+    /**
+     * 头像
+     */
+    private String avatar;
     /**
      * 状态  0：禁用   1：正常
      */

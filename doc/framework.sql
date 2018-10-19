@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-10-15 17:37:12
+Date: 2018-10-19 16:58:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -159,23 +159,24 @@ CREATE TABLE `sys_role_menu` (
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `name` varchar(30) DEFAULT NULL COMMENT '姓名',
   `username` varchar(30) NOT NULL COMMENT '账户',
   `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `salt` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '盐',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(20) DEFAULT NULL COMMENT '移动电话',
+  `avatar` varchar(200) DEFAULT NULL COMMENT '头像图片',
   `status` int(2) DEFAULT NULL COMMENT '状态  0：禁用   1：正常',
   `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `U_SYS_USER_USERNAME` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '20a239be517652a4920366a93cca08a4754313b64ec3e67723941d4428b422d7', 'D5Kt', 'wenlongfei_person@163.com', '18877779999', '1', null, '2018-10-15 14:22:43');
-
+INSERT INTO `sys_user` VALUES ('1', '超级管理员', 'admin', '20a239be517652a4920366a93cca08a4754313b64ec3e67723941d4428b422d7', 'D5Kt', 'wenlongfei_person@163.com', '18877779999', 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png', '1', null, '2018-10-15 14:22:43');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -205,3 +206,9 @@ CREATE TABLE `sys_user_token` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `U_SYS_USER_TOKEN_USER_ID` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_user_token
+-- ----------------------------
+INSERT INTO `sys_user_token` VALUES ('1', '3', 'bc9c98e6ac11f093cafb96c79e34f4ba', '2018-10-16 17:13:27', '2018-10-15 17:13:44');
+INSERT INTO `sys_user_token` VALUES ('2', '1', '8458dec34276b6dce17a3fa4f89abd7b', '2018-10-20 16:44:45', '2018-10-19 16:44:45');

@@ -82,7 +82,7 @@ public class SysLoginController {
 
         //生成token，并保存到数据库
         ApiResult r = sysUserTokenService.createToken(user.getId());
-        return r;
+        return r.put("msg","登录成功").put("user",user);
     }
 
     /**

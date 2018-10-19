@@ -17,6 +17,13 @@ public class SysUserAdd {
     /**
      * 用户名
      */
+    @ApiModelProperty("姓名")
+    @NotBlank(message="姓名不能为空")
+    private String name;
+
+    /**
+     * 用户名
+     */
     @ApiModelProperty("用户名")
     @NotBlank(message="用户名不能为空")
     private String username;
