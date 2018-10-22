@@ -28,7 +28,7 @@
     <select id="selectSysUserPages" resultType="com.basic.core.module.sys.entity.SysUser">
         SELECT * FROM sys_user u
         <if test="usernameOrName != null and usernameOrName != ''">
-            WHERE u.username= #{usernameOrName} OR u.name = #{usernameOrName}
+            WHERE u.username like concat('%', #{usernameOrName}, '%') OR u.name like concat('%', #{usernameOrName}, '%')
         </if>
     </select>
 
