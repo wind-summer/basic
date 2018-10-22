@@ -24,4 +24,12 @@
 			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
 		where ur.user_id = #{userId}
 	</select>
+
+    <select id="selectSysUserPages" resultType="com.basic.core.module.sys.entity.SysUser">
+        SELECT * FROM sys_user u
+        <if test="usernameOrName != null and usernameOrName != ''">
+            WHERE u.username= #{usernameOrName} OR u.name = #{usernameOrName}
+        </if>
+    </select>
+
 </mapper>

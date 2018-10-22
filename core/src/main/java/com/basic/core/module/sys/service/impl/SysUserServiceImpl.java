@@ -1,6 +1,8 @@
 package com.basic.core.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.basic.core.module.sys.constant.SysUserStatus;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
@@ -68,5 +70,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     public SysUser queryByUserName(String username) {
         List<SysUser> userList = this.baseMapper.selectList(new EntityWrapper<SysUser>().eq("username", username));
         return userList.size() > 0 ? userList.get(0) : null;
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @param usernameOrName 条件
+     * @return
+     */
+    @Override
+    public Page<SysUser> pages(Page<SysUser> page, String usernameOrName) {
+        return page.setRecords(this.baseMapper.selectSysUserPages(page, usernameOrName));
     }
 }

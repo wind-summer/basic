@@ -1,5 +1,6 @@
 package com.basic.core.module.sys.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
@@ -26,4 +27,12 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     SysUser queryByUserName(String username);
+
+    /**
+     * 分页查询
+     * @param page
+     * @param usernameOrName 条件
+     * @return
+     */
+    Page<SysUser> pages(Page<SysUser> page, String usernameOrName);
 }
