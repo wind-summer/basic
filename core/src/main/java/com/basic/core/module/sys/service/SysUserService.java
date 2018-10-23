@@ -35,4 +35,10 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     Page<SysUser> pages(Page<SysUser> page, String usernameOrName);
+
+    /**
+     * 删除用户
+     * @param ids
+     */
+    void delete(String ids);
 }

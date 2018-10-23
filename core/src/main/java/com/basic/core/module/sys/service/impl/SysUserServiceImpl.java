@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -82,5 +83,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     @Override
     public Page<SysUser> pages(Page<SysUser> page, String usernameOrName) {
         return page.setRecords(this.baseMapper.selectSysUserPages(page, usernameOrName));
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param ids
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(String ids) {
+        String[] idArr = ids.split(",");
+        List<Long> idList = new ArrayList<>();
+        for(String id:  idArr){
+            idList.add(Long.valueOf(id));
+        }
+        this.baseMapper.deleteBatchIds(idList);
     }
 }
