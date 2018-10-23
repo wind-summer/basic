@@ -1,10 +1,13 @@
-package com.basic.core.exception;
+package com.basic.core.mvc.controller;
 
+import com.basic.core.exception.BizException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +17,8 @@ import java.util.Map;
  * @author wenlongfei
  * @since 2018/10/23
  */
-@org.springframework.web.bind.annotation.ControllerAdvice
-public class ControllerAdvice {
+@ControllerAdvice
+public class SysControllerAdvice {
 
     /**
      * 全局异常捕捉处理
@@ -60,8 +63,8 @@ public class ControllerAdvice {
      * @return
      */
     @ResponseBody
-    @ExceptionHandler(value = com.my.common.exception.BizException.class)
-    public Map myErrorHandler(com.my.common.exception.BizException ex) {
+    @ExceptionHandler(value = BizException.class)
+    public Map myErrorHandler(BizException ex) {
         Map map = new HashMap();
         map.put("code", ex.getCode());
         map.put("msg", ex.getMsg());

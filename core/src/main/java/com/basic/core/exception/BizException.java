@@ -1,5 +1,4 @@
-package com.my.common.exception;
-
+package com.basic.core.exception;
 /**
  * 自定义异常
  *
