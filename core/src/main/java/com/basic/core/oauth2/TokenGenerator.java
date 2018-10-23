@@ -1,6 +1,6 @@
 package com.basic.core.oauth2;
 
-import com.my.common.exception.BizException;
+import com.basic.core.exception.BizException;
 
 import java.security.MessageDigest;
 import java.util.UUID;

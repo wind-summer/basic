@@ -2,7 +2,7 @@ package com.basic.core.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.basic.core.exception.BizException;
 import com.basic.core.module.sys.constant.SysUserStatus;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
@@ -44,7 +44,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         //判断添加的账户已经存在
         Integer count = this.baseMapper.selectCount(new EntityWrapper<SysUser>().eq("username", user.getUsername()));
         if(count > 0 ){
-            throw new com.my.common.exception.BizException("该账户已存在，请更换账户");
+            throw new BizException("该账户已存在，请更换账户");
         }
 
         SysUser newUser = new SysUser();

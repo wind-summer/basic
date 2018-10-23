@@ -1,5 +1,6 @@
 package com.basic.core.utils;
 
+import com.basic.core.exception.BizException;
 import com.basic.core.module.sys.entity.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -47,7 +48,7 @@ public class ShiroUtils {
     public static String getKaptcha(String key) {
         Object kaptcha = getSessionAttribute(key);
         if(kaptcha == null){
-            throw new com.my.common.exception.BizException("验证码已失效");
+            throw new BizException("验证码已失效");
         }
         getSession().removeAttribute(key);
         return kaptcha.toString();
