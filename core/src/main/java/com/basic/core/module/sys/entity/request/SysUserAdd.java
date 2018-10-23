@@ -43,5 +43,6 @@ public class SysUserAdd {
      * 手机号
      */
     @ApiModelProperty("手机号")
+    @NotBlank(message="手机号不能为空")
     private String mobile;
 }

@@ -38,7 +38,7 @@ public class SysUserController extends AbstractApiResultController {
 
     @ApiOperation("添加用户")
     @PostMapping("/user")
-    public ApiResult save(@Validated SysUserAdd sysUser){
+    public ApiResult save(@RequestBody @Validated SysUserAdd sysUser){
         sysUserService.save(sysUser);
         return ApiResult.ok("添加成功");
     }
