@@ -30,4 +30,12 @@ public interface SysUserDao extends BaseMapper<SysUser> {
      * @return
      */
     List<SysUser> selectSysUserPages(Pagination page, @Param("usernameOrName") String usernameOrName);
+
+    /**
+     * 修改密码
+     * @param username
+     * @param password
+     * @param salt
+     */
+    void updatePassword(@Param("username") String username, @Param("password") String password, @Param("salt") String salt);
 }

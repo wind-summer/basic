@@ -7,9 +7,11 @@ import com.basic.core.module.sys.constant.SysUserStatus;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
+import com.basic.core.module.sys.entity.request.SysUserUpdate;
 import com.basic.core.module.sys.service.SysUserRoleService;
 import com.basic.core.module.sys.service.SysUserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.basic.core.utils.CurrentUserUtils;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -99,5 +101,41 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
             idList.add(Long.valueOf(id));
         }
         this.baseMapper.deleteBatchIds(idList);
+    }
+
+    /**
+     * 修改用户
+     *
+     * @param user
+     */
+    @Override
+    public void update(SysUserUpdate user) {
+        SysUser oldUser = this.baseMapper.selectById(user.getId());
+        if(oldUser == null){
+            throw new BizException("没有相应的用户可以修改");
+        }
+        BeanUtils.copyProperties(user, oldUser);
+        this.baseMapper.updateById(oldUser);
+    }
+
+    /**
+     * 修改个人密码
+     *
+     * @param oldPassword
+     * @param newPassword
+     */
+    @Override
+    public void updatePassword(String oldPassword, String newPassword) {
+        SysUser user = CurrentUserUtils.getLogin();
+        String username = user.getUsername();
+
+        //账号不存在、密码错误
+        if(!user.getPassword().equals(new Sha256Hash(oldPassword, user.getSalt()).toHex())) {
+            throw new BizException("原始密码不正确,修改失败");
+        }
+        //sha256加密
+        String salt = RandomStringUtils.randomAlphanumeric(4);
+        String password = new Sha256Hash(user.getPassword(), salt).toHex();
+        this.baseMapper.updatePassword(username, password, salt);
     }
 }

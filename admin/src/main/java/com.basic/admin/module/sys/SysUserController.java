@@ -4,6 +4,7 @@ package com.basic.admin.module.sys;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
+import com.basic.core.module.sys.entity.request.SysUserUpdate;
 import com.basic.core.module.sys.service.SysUserService;
 import com.basic.core.mvc.controller.AbstractApiResultController;
 import com.basic.core.utils.ApiResult;
@@ -45,8 +46,9 @@ public class SysUserController extends AbstractApiResultController {
 
     @ApiOperation("修改用户")
     @PutMapping("/user")
-    public void update(@RequestBody @Validated SysUser sysUser){
-        //sysUserService.save(sysUser);
+    public ApiResult update(@RequestBody @Validated SysUserUpdate sysUser){
+        sysUserService.update(sysUser);
+        return ApiResult.ok("修改成功");
     }
 
     @ApiOperation("删除用户|批量删除")

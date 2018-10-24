@@ -32,4 +32,8 @@
         </if>
     </select>
 
+    <update id="updatePassword">
+        update sys_user set password = #{password},set salt = #{salt} where username = #{username}
+    </update>
+
 </mapper>
