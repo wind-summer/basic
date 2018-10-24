@@ -45,13 +45,13 @@ public class SysUserController extends AbstractApiResultController {
 
     @ApiOperation("修改用户")
     @PutMapping("/user")
-    public void update(SysUser sysUser){
+    public void update(@RequestBody @Validated SysUser sysUser){
         //sysUserService.save(sysUser);
     }
 
     @ApiOperation("删除用户|批量删除")
-    @DeleteMapping("/user")
-    public ApiResult update(@RequestBody String ids){
+    @DeleteMapping("/user/{ids}")
+    public ApiResult update(@PathVariable String ids){
         sysUserService.delete(ids);
         return ApiResult.ok("删除成功");
     }
