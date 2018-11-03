@@ -10,7 +10,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: test
 
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
