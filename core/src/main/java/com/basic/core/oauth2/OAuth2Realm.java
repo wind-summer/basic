@@ -3,12 +3,14 @@ package com.basic.core.oauth2;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.SysUserToken;
 import com.basic.core.module.sys.service.ShiroService;
+import com.basic.core.utils.SpringContextUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -50,11 +52,11 @@ public class OAuth2Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        /*String profiles = SpringContextUtils.applicationContext.getEnvironment().getActiveProfiles()[0];
+        String profiles = SpringContextUtils.applicationContext.getEnvironment().getActiveProfiles()[0];
         //如果是开发环境不验证，方便测试
-        if(profiles!=null && "dev".equals(profiles)){
+        if(profiles!=null && "test".equals(profiles)){
             return new SimpleAuthenticationInfo();
-        }*/
+        }
 
         String accessToken = (String) token.getPrincipal();
 

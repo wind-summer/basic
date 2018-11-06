@@ -2,10 +2,12 @@ package com.basic.core.oauth2;
 
 import com.basic.core.config.ApplicationProperties;
 import com.basic.core.utils.ApiResult;
+import com.basic.core.utils.SpringContextUtils;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,11 @@ public class OAuth2Filter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        String profiles = SpringContextUtils.applicationContext.getEnvironment().getActiveProfiles()[0];
+        //如果是开发环境不验证，方便测试
+        if(profiles!=null && "test".equals(profiles)){
+            return true;
+        }
         //获取请求token，如果token不存在，直接返回401
         String token = getRequestToken((HttpServletRequest) request);
         if(StringUtils.isBlank(token)){
