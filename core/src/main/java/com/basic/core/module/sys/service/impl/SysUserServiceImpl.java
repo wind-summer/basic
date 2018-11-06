@@ -2,17 +2,20 @@ package com.basic.core.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.basic.core.config.ApplicationProperties;
 import com.basic.core.exception.BizException;
 import com.basic.core.module.sys.constant.SysUserStatus;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
+import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
 import com.basic.core.module.sys.service.SysUserRoleService;
 import com.basic.core.module.sys.service.SysUserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.utils.CurrentUserUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.BeanUtils;
@@ -33,9 +36,21 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> implements SysUserService {
     private SysUserDao sysUserDao;
     private SysUserRoleService sysUserRoleService;
+    private ApplicationProperties applicationProperties;
+
+    /**
+     * 获取系统配置的默认系统管理员
+     * @return
+     */
+    public List<Long> getAdministratorIds(){
+        List<Long> ids = applicationProperties.getSecurity().getAdminIds();
+        return ids;
+    }
+
     /**
      * 创建用户
      *
@@ -84,7 +99,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
      */
     @Override
     public Page<SysUser> pages(Page<SysUser> page, String usernameOrName) {
-        return page.setRecords(this.baseMapper.selectSysUserPages(page, usernameOrName));
+        return page.setRecords(this.baseMapper.selectSysUserPages(page, usernameOrName, getAdministratorIds()));
     }
 
     /**
@@ -100,7 +115,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         for(String id:  idArr){
             idList.add(Long.valueOf(id));
         }
-        this.baseMapper.deleteBatchIds(idList);
+        //去除系统管理员，系统管理员不可以删除
+        idList.removeAll(getAdministratorIds());
+        if(idList==null && idList.size()>0){
+            this.baseMapper.deleteBatchIds(idList);
+        }
     }
 
     /**
@@ -110,6 +129,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
      */
     @Override
     public void update(SysUserUpdate user) {
+        List<Long> ids = getAdministratorIds();
+        if(ids.contains(user.getId())){
+            throw new BizException("该用户是系统管理员不能修改");
+        }
         SysUser oldUser = this.baseMapper.selectById(user.getId());
         if(oldUser == null){
             throw new BizException("没有相应的用户可以修改");
@@ -135,7 +158,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         }
         //sha256加密
         String salt = RandomStringUtils.randomAlphanumeric(4);
-        String password = new Sha256Hash(user.getPassword(), salt).toHex();
+        String password = new Sha256Hash(newPassword, salt).toHex();
         this.baseMapper.updatePassword(username, password, salt);
+    }
+
+    /**
+     * 修改用户状态
+     *
+     * @param userSwitch
+     */
+    @Override
+    public void userSwitch(SysUserSwitch userSwitch) {
+        List<Long> ids = getAdministratorIds();
+        log.info("测试ids:{}",ids);
     }
 }

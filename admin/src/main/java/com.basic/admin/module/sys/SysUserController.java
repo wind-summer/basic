@@ -4,6 +4,7 @@ package com.basic.admin.module.sys;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
+import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
 import com.basic.core.module.sys.service.SysUserService;
 import com.basic.core.mvc.controller.AbstractApiResultController;
@@ -56,6 +57,13 @@ public class SysUserController extends AbstractApiResultController {
     public ApiResult update(@PathVariable String ids){
         sysUserService.delete(ids);
         return ApiResult.ok("删除成功");
+    }
+
+    @ApiOperation("用户开关")
+    @PutMapping("/switch")
+    public ApiResult userSwitch(@RequestBody @Validated SysUserSwitch userSwitch){
+        sysUserService.userSwitch(userSwitch);
+        return ApiResult.ok("操作成功");
     }
 }
 

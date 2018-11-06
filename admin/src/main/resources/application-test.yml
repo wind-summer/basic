@@ -66,7 +66,7 @@ application:
     tokenExpire: 86400
     # 客户默认初始密码
     defaultPassword: 123456
-    # 默认管理员id,多个用逗号分隔
+    # 默认超级管理员id,多个用逗号分隔
     adminIds: 1,2,3
     # 密码错误次数
     errorNum: 3

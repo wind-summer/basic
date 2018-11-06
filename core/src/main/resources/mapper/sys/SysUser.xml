@@ -26,14 +26,21 @@
 	</select>
 
     <select id="selectSysUserPages" resultType="com.basic.core.module.sys.entity.SysUser">
-        SELECT * FROM sys_user u
+        select * from sys_user u
+        where 1=1
+        <if test="ids != null and ids.size() > 0">
+            and id not in 
+            <foreach collection="ids" item="item" index="index" open="("  close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
         <if test="usernameOrName != null and usernameOrName != ''">
-            WHERE u.username like concat('%', #{usernameOrName}, '%') OR u.name like concat('%', #{usernameOrName}, '%')
+            and u.username like concat('%', #{usernameOrName}, '%') OR u.name like concat('%', #{usernameOrName}, '%')
         </if>
     </select>
 
     <update id="updatePassword">
-        update sys_user set password = #{password},set salt = #{salt} where username = #{username}
+        update sys_user set password = #{password}, salt = #{salt} where username = #{username}
     </update>
 
 </mapper>

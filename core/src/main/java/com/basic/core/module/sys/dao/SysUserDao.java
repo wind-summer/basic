@@ -29,7 +29,7 @@ public interface SysUserDao extends BaseMapper<SysUser> {
      * @param usernameOrName
      * @return
      */
-    List<SysUser> selectSysUserPages(Pagination page, @Param("usernameOrName") String usernameOrName);
+    List<SysUser> selectSysUserPages(Pagination page, @Param("usernameOrName") String usernameOrName, @Param("ids") List<Long> ids);
 
     /**
      * 修改密码

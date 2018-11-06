@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
+import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
 
 /**
@@ -55,4 +56,10 @@ public interface SysUserService extends IService<SysUser> {
      * @param newPassword
      */
     void updatePassword(String oldPassword, String newPassword);
+
+    /**
+     * 修改用户状态
+     * @param userSwitch
+     */
+    void userSwitch(SysUserSwitch userSwitch);
 }

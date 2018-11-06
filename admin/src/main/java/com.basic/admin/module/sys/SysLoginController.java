@@ -1,6 +1,7 @@
 package com.basic.admin.module.sys;
 
 import com.basic.core.module.sys.entity.SysUser;
+import com.basic.core.module.sys.entity.request.PasswordUpdate;
 import com.basic.core.module.sys.entity.request.SysLogin;
 import com.basic.core.module.sys.service.SysUserService;
 import com.basic.core.module.sys.service.SysUserTokenService;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -61,7 +63,7 @@ public class SysLoginController {
      */
     @ApiOperation("登陆")
     @PostMapping("/sign_in")
-    public ApiResult login(@RequestBody SysLogin login) {
+    public ApiResult login(@RequestBody @Validated SysLogin login) {
         /*String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         if(!captcha.equalsIgnoreCase(kaptcha)){
             return ApiResult.error("验证码不正确");
@@ -95,5 +97,17 @@ public class SysLoginController {
     public ApiResult logOut(@RequestBody SysLogin login) {
 
         return ApiResult.ok();
+    }
+
+    /**
+     * 修改当前登陆用户密码
+     * @param passwordUpdate
+     * @return
+     */
+    @ApiOperation("修改密码")
+    @PutMapping("/password")
+    public ApiResult logOut(@RequestBody @Validated PasswordUpdate passwordUpdate) {
+        sysUserService.updatePassword(passwordUpdate.getOldPassword(), passwordUpdate.getPassword());
+        return ApiResult.ok("修改成功");
     }
 }

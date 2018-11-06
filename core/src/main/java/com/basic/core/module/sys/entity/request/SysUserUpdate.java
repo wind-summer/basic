@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by wenlf on 2018/10/12
@@ -18,7 +19,7 @@ public class SysUserUpdate {
      * 用户Id
      */
     @ApiModelProperty("id")
-    @NotBlank(message="id不能为空")
+    @NotNull(message="id不能为空")
     private Long id;
     /**
      * 用户名
