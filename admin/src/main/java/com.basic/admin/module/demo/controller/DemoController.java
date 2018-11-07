@@ -7,6 +7,7 @@ import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.utils.CurrentUserUtils;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,6 +34,7 @@ import java.util.List;
 @RequestMapping("/demo")
 @Slf4j
 @AllArgsConstructor
+@Api(description = "DEMO示例")
 public class DemoController extends AbstractApiResultController {
 
     private final DemoService demoService;

@@ -50,7 +50,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         String profiles = SpringContextUtils.applicationContext.getEnvironment().getActiveProfiles()[0];
         //如果是开发环境不验证，方便测试
-        if(profiles!=null && "test".equals(profiles)){
+        if(profiles!=null && "dev".equals(profiles)){
             return true;
         }
         //获取请求token，如果token不存在，直接返回401

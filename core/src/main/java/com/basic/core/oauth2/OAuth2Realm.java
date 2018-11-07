@@ -54,7 +54,7 @@ public class OAuth2Realm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String profiles = SpringContextUtils.applicationContext.getEnvironment().getActiveProfiles()[0];
         //如果是开发环境不验证，方便测试
-        if(profiles!=null && "test".equals(profiles)){
+        if(profiles!=null && "dev".equals(profiles)){
             return new SimpleAuthenticationInfo();
         }
 

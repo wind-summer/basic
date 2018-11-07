@@ -117,7 +117,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         }
         //去除系统管理员，系统管理员不可以删除
         idList.removeAll(getAdministratorIds());
-        if(idList==null && idList.size()>0){
+        if(idList!=null && idList.size()>0){
             this.baseMapper.deleteBatchIds(idList);
         }
     }
