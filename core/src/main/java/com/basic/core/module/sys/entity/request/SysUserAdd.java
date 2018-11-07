@@ -1,5 +1,6 @@
 package com.basic.core.module.sys.entity.request;
 
+import com.basic.core.module.sys.constant.SysUserStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -45,4 +46,10 @@ public class SysUserAdd {
     @ApiModelProperty("手机号")
     @NotBlank(message="手机号不能为空")
     private String mobile;
+
+    /**
+     * 状态
+     */
+    @ApiModelProperty("状态：ENABLE：启用 DISABLE:禁用")
+    private SysUserStatus status;
 }

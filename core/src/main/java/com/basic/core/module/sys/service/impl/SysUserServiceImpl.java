@@ -71,7 +71,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         //sha256加密
         String salt = RandomStringUtils.randomAlphanumeric(4);
         newUser.setPassword(new Sha256Hash(user.getPassword(), salt).toHex());
-        newUser.setSalt(salt).setStatus(SysUserStatus.ENABLE.getValue());
+        if(user.getStatus()!= null){
+            newUser.setSalt(salt).setStatus(user.getStatus().getValue());
+        }else{
+            newUser.setSalt(salt).setStatus(SysUserStatus.ENABLE.getValue());
+        }
         sysUserDao.insert(newUser);
 
         //保存用户与角色关系
