@@ -142,6 +142,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
             throw new BizException("没有相应的用户可以修改");
         }
         BeanUtils.copyProperties(user, oldUser);
+        oldUser.setStatus(user.getStatus() !=null ? user.getStatus().getValue() : SysUserStatus.ENABLE.getValue());
         this.baseMapper.updateById(oldUser);
     }
 
