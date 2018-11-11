@@ -13,9 +13,15 @@ import javax.validation.constraints.NotNull;
  * @since 2018/11/6
  */
 @Data
-@ApiModel(description = "菜单添加内容")
-public class SysMenuAdd {
+@ApiModel(description = "菜单修改内容")
+public class SysMenuUpdate {
 
+    /**
+     * ID
+     */
+    @ApiModelProperty("ID")
+    @NotNull(message = "ID不能为空")
+    private Long id;
     /**
      * 类型
      */
