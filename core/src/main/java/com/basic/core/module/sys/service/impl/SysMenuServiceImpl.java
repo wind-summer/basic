@@ -6,6 +6,7 @@ import com.basic.core.module.sys.entity.SysMenu;
 import com.basic.core.module.sys.dao.SysMenuDao;
 import com.basic.core.module.sys.entity.request.SysMenuAdd;
 import com.basic.core.module.sys.entity.request.SysMenuUpdate;
+import com.basic.core.module.sys.entity.response.TreeNode;
 import com.basic.core.module.sys.service.SysMenuService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -35,10 +38,50 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      * 查询所有的菜单
      */
     @Override
-    public List<SysMenu> findAllMenus() {
+    public List<TreeNode> findAllMenus() {
         List<SysMenu> list = this.baseMapper.selectList(new EntityWrapper<SysMenu>());
+        List<TreeNode> menuTrees = getMenuTrees(list);
+        return menuTrees;
+    }
 
-        return list;
+    /**
+     * 组装菜单
+     * @param menus
+     * @return
+     */
+    private List<TreeNode> getMenuTrees(List<SysMenu> menus) {
+        List<TreeNode> trees = new ArrayList<>();
+        Map<Long, TreeNode> treeMap = new HashMap<>();
+        menus.forEach(m -> {
+            TreeNode treeNode = new TreeNode();
+            BeanUtils.copyProperties(m, treeNode);
+            trees.add(treeNode);
+            treeMap.put(treeNode.getId(), treeNode);
+        });
+
+        trees.forEach(treeNode -> {
+            if(treeNode.getParentId() != 0){
+                TreeNode node = treeMap.get(treeNode.getParentId());
+                if(node != null){
+                    List<TreeNode> children = node.getChildren();
+                    if(children != null){
+                        children.add(treeNode);
+                    }else{
+                        children = new ArrayList<>();
+                        children.add(treeNode);
+                        node.setChildren(children);
+                    }
+                }
+            }
+        });
+
+        List<TreeNode> newTrees = new ArrayList<>();
+        trees.forEach(treeNode -> {
+            if(treeNode.getParentId() == 0){
+                newTrees.add(treeNode);
+            }
+        });
+        return newTrees;
     }
 
     /**
