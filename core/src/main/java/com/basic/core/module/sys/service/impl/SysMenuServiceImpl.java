@@ -38,9 +38,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      * 查询所有的菜单
      */
     @Override
-    public List<TreeNode> findAllMenus() {
+    public List<SysMenu> findAllMenus() {
         List<SysMenu> list = this.baseMapper.selectList(new EntityWrapper<SysMenu>());
-        List<TreeNode> menuTrees = getMenuTrees(list);
+        List<SysMenu> menuTrees = getMenuTrees(list);
         return menuTrees;
     }
 
@@ -49,39 +49,39 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      * @param menus
      * @return
      */
-    private List<TreeNode> getMenuTrees(List<SysMenu> menus) {
-        List<TreeNode> trees = new ArrayList<>();
-        Map<Long, TreeNode> treeMap = new HashMap<>();
+    private List<SysMenu> getMenuTrees(List<SysMenu> menus) {
+        //List<TreeNode> trees = new ArrayList<>();
+        Map<Long, SysMenu> treeMap = new HashMap<>();
         menus.forEach(m -> {
-            TreeNode treeNode = new TreeNode();
-            BeanUtils.copyProperties(m, treeNode);
-            trees.add(treeNode);
-            treeMap.put(treeNode.getId(), treeNode);
+            //TreeNode treeNode = new TreeNode();
+            //BeanUtils.copyProperties(m, treeNode);
+            //trees.add(treeNode);
+            treeMap.put(m.getId(), m);
         });
 
-        trees.forEach(treeNode -> {
-            if(treeNode.getParentId() != 0){
-                TreeNode node = treeMap.get(treeNode.getParentId());
+        menus.forEach(menu -> {
+            if(menu.getParentId() != 0){
+                SysMenu node = treeMap.get(menu.getParentId());
                 if(node != null){
-                    List<TreeNode> children = node.getChildren();
+                    List<SysMenu> children = node.getChildren();
                     if(children != null){
-                        children.add(treeNode);
+                        children.add(menu);
                     }else{
                         children = new ArrayList<>();
-                        children.add(treeNode);
+                        children.add(menu);
                         node.setChildren(children);
                     }
                 }
             }
         });
 
-        List<TreeNode> newTrees = new ArrayList<>();
-        trees.forEach(treeNode -> {
-            if(treeNode.getParentId() == 0){
-                newTrees.add(treeNode);
+        List<SysMenu> newMenus = new ArrayList<>();
+        menus.forEach(menu -> {
+            if(menu.getParentId() == 0){
+                newMenus.add(menu);
             }
         });
-        return newTrees;
+        return newMenus;
     }
 
     /**

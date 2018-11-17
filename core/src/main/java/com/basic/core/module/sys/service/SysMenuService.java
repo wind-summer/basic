@@ -20,7 +20,7 @@ public interface SysMenuService extends IService<SysMenu> {
     /**
      * 查询所有的菜单
      */
-    List<TreeNode> findAllMenus();
+    List<SysMenu> findAllMenus();
 
     /**
      * 添加菜单

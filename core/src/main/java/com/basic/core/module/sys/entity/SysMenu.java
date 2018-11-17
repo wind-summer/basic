@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * <p>
  * 菜单表
@@ -46,5 +48,11 @@ public class SysMenu extends BaseEntity<SysMenu> {
      */
     @TableField("order_num")
     private Integer orderNum;
+
+    /**
+     * 子菜单
+     */
+    @TableField(exist = false)
+    private List<SysMenu> children;
 
 }
