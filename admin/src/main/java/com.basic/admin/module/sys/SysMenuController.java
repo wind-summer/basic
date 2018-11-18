@@ -3,6 +3,7 @@ package com.basic.admin.module.sys;
 import com.basic.core.module.sys.entity.SysMenu;
 import com.basic.core.module.sys.entity.request.SysMenuAdd;
 import com.basic.core.module.sys.entity.request.SysMenuUpdate;
+import com.basic.core.module.sys.entity.response.ParentTree;
 import com.basic.core.module.sys.service.SysMenuService;
 import com.basic.core.utils.ApiResult;
 import io.swagger.annotations.Api;
@@ -31,6 +32,12 @@ public class SysMenuController {
     public List<SysMenu> page(){
         //Page<SysUser> pageList = sysUserService.pages(page, usernameOrName);
         return sysMenuService.findAllMenus();
+    }
+
+    @ApiOperation("上级菜单树")
+    @GetMapping("/menu/parentTrees")
+    public List<ParentTree> parentTrees(){
+        return sysMenuService.parentTrees();
     }
 
     @ApiOperation("添加菜单")

@@ -6,7 +6,7 @@ import com.basic.core.module.sys.entity.SysMenu;
 import com.basic.core.module.sys.dao.SysMenuDao;
 import com.basic.core.module.sys.entity.request.SysMenuAdd;
 import com.basic.core.module.sys.entity.request.SysMenuUpdate;
-import com.basic.core.module.sys.entity.response.TreeNode;
+import com.basic.core.module.sys.entity.response.ParentTree;
 import com.basic.core.module.sys.service.SysMenuService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
@@ -50,15 +50,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      * @return
      */
     private List<SysMenu> getMenuTrees(List<SysMenu> menus) {
-        //List<TreeNode> trees = new ArrayList<>();
         Map<Long, SysMenu> treeMap = new HashMap<>();
+        //将所有的数据放到map，以ID为key，对象为value
         menus.forEach(m -> {
-            //TreeNode treeNode = new TreeNode();
-            //BeanUtils.copyProperties(m, treeNode);
-            //trees.add(treeNode);
             treeMap.put(m.getId(), m);
         });
-
+        //遍历menus并且将对象帮到到父节点下面
         menus.forEach(menu -> {
             if(menu.getParentId() != 0){
                 SysMenu node = treeMap.get(menu.getParentId());
@@ -74,11 +71,61 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
                 }
             }
         });
-
+        //只去一级菜单
         List<SysMenu> newMenus = new ArrayList<>();
         menus.forEach(menu -> {
             if(menu.getParentId() == 0){
                 newMenus.add(menu);
+            }
+        });
+        return newMenus;
+    }
+
+    /**
+     * 获取上级菜单模型
+     */
+    @Override
+    public List<ParentTree> parentTrees() {
+        List<SysMenu> list = this.baseMapper.selectList(new EntityWrapper<SysMenu>());
+        return getParentTrees(list);
+    }
+
+    /**
+     * 组装菜单
+     * @param menus
+     * @return
+     */
+    private List<ParentTree> getParentTrees(List<SysMenu> menus) {
+        Map<Long, ParentTree> treeMap = new HashMap<>();
+        //将所有的数据放到map，以ID为key，对象为value
+        List<ParentTree> trees = new ArrayList<>();
+        menus.forEach(m -> {
+            ParentTree tree = new ParentTree();
+            tree.setLabel(m.getName()).setId(m.getId()).setParentId(m.getParentId());
+            trees.add(tree);
+            treeMap.put(m.getId(), tree);
+        });
+        //遍历trees并且将对象帮到到父节点下面
+        trees.forEach(tree -> {
+            if(tree.getId() != 0){
+                ParentTree node = treeMap.get(tree.getParentId());
+                if(node != null){
+                    List<ParentTree> children = node.getChildren();
+                    if(children != null){
+                        children.add(tree);
+                    }else{
+                        children = new ArrayList<>();
+                        children.add(tree);
+                        node.setChildren(children);
+                    }
+                }
+            }
+        });
+        //只去一级菜单
+        List<ParentTree> newMenus = new ArrayList<>();
+        trees.forEach(tree -> {
+            if(tree.getParentId() == 0){
+                newMenus.add(tree);
             }
         });
         return newMenus;
@@ -94,7 +141,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         if(!sysMenuAdd.getParentId().equals(0)){
             //验证上级菜单是否有
             Integer count = this.baseMapper.selectCount(new EntityWrapper<SysMenu>().eq("id", sysMenuAdd.getParentId()));
-            if(count > 0){
+            if(count == 0){
                 throw new BizException("没有对应的上级菜单！");
             }
         }

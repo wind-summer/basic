@@ -4,7 +4,7 @@ import com.basic.core.module.sys.entity.SysMenu;
 import com.baomidou.mybatisplus.service.IService;
 import com.basic.core.module.sys.entity.request.SysMenuAdd;
 import com.basic.core.module.sys.entity.request.SysMenuUpdate;
-import com.basic.core.module.sys.entity.response.TreeNode;
+import com.basic.core.module.sys.entity.response.ParentTree;
 
 import java.util.List;
 
@@ -21,6 +21,11 @@ public interface SysMenuService extends IService<SysMenu> {
      * 查询所有的菜单
      */
     List<SysMenu> findAllMenus();
+
+    /**
+     * 获取上级菜单模型
+     */
+    List<ParentTree> parentTrees();
 
     /**
      * 添加菜单
