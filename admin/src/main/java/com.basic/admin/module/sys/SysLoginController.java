@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.Semaphore;
 
 /**
  * 登陆控制器
@@ -110,4 +112,39 @@ public class SysLoginController {
         sysUserService.updatePassword(passwordUpdate.getOldPassword(), passwordUpdate.getPassword());
         return ApiResult.ok("修改成功");
     }
+
+    /**
+     * 并发demo
+     * @param request
+     * @return
+     */
+    @ApiOperation("并发demo")
+    @GetMapping("/demo")
+    public ApiResult logOut(HttpServletRequest request) {
+        //可用资源数
+        int availablePermits = semaphore.availablePermits();
+        System.out.println("可用资源数量---"+availablePermits);
+        if(availablePermits>0) {
+            System.out.println("抢到资源****根据id修改该图书的库存");
+            try {
+                //请求占用一个资源
+                semaphore.acquire(1);
+                //根据id修改该图书的库存
+                //方法体
+                System.out.println("事情操作完成");
+            }catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                //释放一个资源
+                semaphore.release(1);
+            }
+            return ApiResult.ok("抢到资源处理业务逻辑，最后释放资源完成");
+        }else {
+            System.out.println("*********资源已被占用，稍后再试***********");
+            return ApiResult.ok("*********资源已被占用，稍后再试***********");
+        }
+    }
+    //处理并发事件
+    //定义资源的总数量
+    Semaphore semaphore=new Semaphore(1);
 }
