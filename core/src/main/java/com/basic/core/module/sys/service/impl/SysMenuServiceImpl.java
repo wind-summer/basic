@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +58,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         });
         //遍历menus并且将对象帮到到父节点下面
         menus.forEach(menu -> {
-            if(menu.getParentId() != 0){
+            if(menu.getParentId() != null){
                 SysMenu node = treeMap.get(menu.getParentId());
                 if(node != null){
                     List<SysMenu> children = node.getChildren();
@@ -74,7 +75,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         //只去一级菜单
         List<SysMenu> newMenus = new ArrayList<>();
         menus.forEach(menu -> {
-            if(menu.getParentId() == 0){
+            if(menu.getParentId() == null){
                 newMenus.add(menu);
             }
         });
@@ -107,7 +108,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         });
         //遍历trees并且将对象帮到到父节点下面
         trees.forEach(tree -> {
-            if(tree.getId() != 0){
+            if(tree.getId() != null){
                 ParentTree node = treeMap.get(tree.getParentId());
                 if(node != null){
                     List<ParentTree> children = node.getChildren();
@@ -124,7 +125,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         //只去一级菜单
         List<ParentTree> newMenus = new ArrayList<>();
         trees.forEach(tree -> {
-            if(tree.getParentId() == 0){
+            if(tree.getParentId() == null){
                 newMenus.add(tree);
             }
         });
@@ -138,7 +139,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      */
     @Override
     public void addMenu(SysMenuAdd sysMenuAdd) {
-        if(!sysMenuAdd.getParentId().equals(0)){
+        if(sysMenuAdd.getParentId() != null){
             //验证上级菜单是否有
             Integer count = this.baseMapper.selectCount(new EntityWrapper<SysMenu>().eq("id", sysMenuAdd.getParentId()));
             if(count == 0){
@@ -170,18 +171,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
     /**
      * 删除菜单 批量删除
      *
-     * @param ids
+     * @param id
      */
     @Override
-    public void deleteMenus(String ids) {
-        String[] idArr = ids.split(",");
-        List<Long> idList = new ArrayList<>();
-        for(String id:  idArr){
-            idList.add(Long.valueOf(id));
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteMenus(Long id) {
+        Integer count = this.baseMapper.selectCount(new EntityWrapper<SysMenu>().eq("parent_id", id));
+        if(count > 0){
+            throw new BizException("该节点含有子节点，不能删除");
         }
-        //去除系统管理员，系统管理员不可以删除
-        if(idList!=null && idList.size()>0){
-            this.baseMapper.deleteBatchIds(idList);
-        }
+        this.baseMapper.deleteById(id);
     }
 }

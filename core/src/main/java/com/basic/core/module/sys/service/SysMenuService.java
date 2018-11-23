@@ -40,8 +40,8 @@ public interface SysMenuService extends IService<SysMenu> {
     void updateMenu(SysMenuUpdate sysMenu);
 
     /**
-     * 删除菜单 批量删除
-     * @param ids
+     * 删除菜单 单个删除，有子节点不允许删除，必须子节点删除完全之后才能删除
+     * @param id
      */
-    void deleteMenus(String ids);
+    void deleteMenus(Long id);
 }

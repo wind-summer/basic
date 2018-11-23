@@ -55,9 +55,9 @@ public class SysMenuController {
     }
 
     @ApiOperation("删除菜单|批量删除")
-    @DeleteMapping("/menu/{ids}")
-    public ApiResult update(@PathVariable String ids){
-        sysMenuService.deleteMenus(ids);
+    @DeleteMapping("/menu/{id}")
+    public ApiResult update(@PathVariable Long id){
+        sysMenuService.deleteMenus(id);
         return ApiResult.ok("删除成功");
     }
 }

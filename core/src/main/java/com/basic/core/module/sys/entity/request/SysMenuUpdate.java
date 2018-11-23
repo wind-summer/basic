@@ -40,7 +40,6 @@ public class SysMenuUpdate {
      * 上级菜单ID
      */
     @ApiModelProperty("上级菜单ID")
-    @NotNull(message = "上级菜单ID不能为空")
     private Long parentId;
 
     /**
