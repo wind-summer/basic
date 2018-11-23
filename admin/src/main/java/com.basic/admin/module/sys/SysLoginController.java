@@ -39,6 +39,9 @@ public class SysLoginController {
     private Producer producer;
     private SysUserService sysUserService;
     private SysUserTokenService sysUserTokenService;
+    //处理并发事件
+    //定义资源的总数量
+    final Semaphore semaphore = new Semaphore(1);
 
     @ApiOperation(value = "获取验证码图片-接口")
     @GetMapping("/captcha.jpg")
@@ -125,12 +128,13 @@ public class SysLoginController {
         int availablePermits = semaphore.availablePermits();
         System.out.println("可用资源数量---"+availablePermits);
         if(availablePermits>0) {
-            System.out.println("抢到资源****根据id修改该图书的库存");
             try {
                 //请求占用一个资源
                 semaphore.acquire(1);
                 //根据id修改该图书的库存
                 //方法体
+                //模拟实际业务逻辑
+                //Thread.sleep((long) (Math.random() * 100));
                 System.out.println("事情操作完成");
             }catch (Exception e) {
                 e.printStackTrace();
@@ -138,13 +142,11 @@ public class SysLoginController {
                 //释放一个资源
                 semaphore.release(1);
             }
-            return ApiResult.ok("抢到资源处理业务逻辑，最后释放资源完成");
+            return ApiResult.ok("=======================================================================抢到资源处理业务逻辑，最后释放资源完成");
         }else {
             System.out.println("*********资源已被占用，稍后再试***********");
             return ApiResult.ok("*********资源已被占用，稍后再试***********");
         }
     }
-    //处理并发事件
-    //定义资源的总数量
-    Semaphore semaphore=new Semaphore(1);
+
 }
