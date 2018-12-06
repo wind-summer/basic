@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2018-10-12
  */
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/sys")
 @AllArgsConstructor
 @Api(description = "用户管理")
 public class SysUserController extends AbstractApiResultController {

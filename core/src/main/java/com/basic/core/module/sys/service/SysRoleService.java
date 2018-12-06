@@ -23,7 +23,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param roleName 角色名称
      * @return
      */
-    Page<SysUser> pages(Page<SysRole> page, String roleName);
+    Page<SysRole> pages(Page<SysRole> page, String roleName);
 
     /**
      * 添加角色

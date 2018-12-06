@@ -49,8 +49,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
      * @return
      */
     @Override
-    public Page<SysUser> pages(Page<SysRole> page, String roleName) {
-        EntityWrapper ew = new EntityWrapper<>();
+    public Page<SysRole> pages(Page<SysRole> page, String roleName) {
+        EntityWrapper ew = new EntityWrapper<SysRole>();
         if(!StringUtils.isEmpty(roleName)){
             ew.like("role_name", roleName);
         }

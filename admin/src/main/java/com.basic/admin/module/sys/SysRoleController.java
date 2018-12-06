@@ -2,7 +2,6 @@ package com.basic.admin.module.sys;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysRole;
-import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysRoleAdd;
 import com.basic.core.module.sys.entity.request.SysRoleUpdate;
 import com.basic.core.module.sys.service.SysRoleService;
@@ -30,8 +29,8 @@ public class SysRoleController {
 
     @ApiOperation("角色列表")
     @GetMapping("/roles")
-    public Page<SysUser> page(Page<SysRole> page, String roleName){
-        Page<SysUser> pageList = sysRoleService.pages(page, roleName);
+    public Page<SysRole> page(Page<SysRole> page, String roleName){
+        Page<SysRole> pageList = sysRoleService.pages(page, roleName);
         return pageList;
     }
 
