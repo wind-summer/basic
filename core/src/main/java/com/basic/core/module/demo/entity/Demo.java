@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.basic.core.mvc.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -17,6 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
+@ToString
 @TableName("my_demo")
 public class Demo extends BaseEntity<Demo> {
 

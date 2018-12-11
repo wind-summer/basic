@@ -10,5 +10,8 @@ public class AdminApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
+        //ConfigurableApplicationContext context = SpringApplication.run(AdminApplication.class, args);
+        //装载监听
+        //context.addApplicationListener(new MyListener());
     }
 }

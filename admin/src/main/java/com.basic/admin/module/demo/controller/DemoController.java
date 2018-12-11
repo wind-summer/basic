@@ -3,10 +3,12 @@ package com.basic.admin.module.demo.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.basic.core.listener.MyEvent;
 import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.utils.CurrentUserUtils;
+import com.basic.core.utils.SpringContextUtils;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +45,12 @@ public class DemoController extends AbstractApiResultController {
     @GetMapping("/test")
     @Transactional(rollbackFor = Exception.class)
     public void test(){
-        SysUser user = CurrentUserUtils.getLogin();
+        Demo demo = demoService.selectById(1);
+        MyEvent event = new MyEvent(demo);
+        SpringContextUtils.applicationContext.publishEvent(event);
+        /*SysUser user = CurrentUserUtils.getLogin();
         valueOperations.set("name","张三");
-        List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));
+        List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));*/
         /*Demo demo = new Demo();
         demo.setAge(12).setName("马六").setRemark("..");
         demoService.insert(demo);*/
