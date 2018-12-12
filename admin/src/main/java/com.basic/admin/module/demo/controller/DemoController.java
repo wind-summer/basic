@@ -7,14 +7,18 @@ import com.basic.core.listener.MyEvent;
 import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
 import com.basic.core.module.sys.entity.SysUser;
+import com.basic.core.statemachine.entity.OrderEvents;
+import com.basic.core.statemachine.entity.OrderStates;
 import com.basic.core.utils.CurrentUserUtils;
 import com.basic.core.utils.SpringContextUtils;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.statemachine.StateMachine;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,13 +45,19 @@ public class DemoController extends AbstractApiResultController {
 
     private final DemoService demoService;
     private final ValueOperations valueOperations;
+    private StateMachine<OrderStates, OrderEvents> stateMachine;
 
     @GetMapping("/test")
     @Transactional(rollbackFor = Exception.class)
     public void test(){
-        Demo demo = demoService.selectById(1);
+        stateMachine.start();
+        stateMachine.sendEvent(OrderEvents.PAY);
+        stateMachine.sendEvent(OrderEvents.SHIPPING);
+
+
+       /* Demo demo = demoService.selectById(1);
         MyEvent event = new MyEvent(demo);
-        SpringContextUtils.applicationContext.publishEvent(event);
+        SpringContextUtils.applicationContext.publishEvent(event);*/
         /*SysUser user = CurrentUserUtils.getLogin();
         valueOperations.set("name","张三");
         List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));*/

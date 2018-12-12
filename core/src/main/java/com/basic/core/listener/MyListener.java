@@ -20,6 +20,6 @@ public class MyListener /*implements ApplicationListener<MyEvent>*/ {
     @EventListener
     public void onApplicationEvent(MyEvent event) {
         log.info(String.format("%s监听到事件源：%s.", MyListener.class.getName(), event.getSource()));
-        log.info("object对象：{}" + event.getSource().toString());
+        log.info("object对象：{}",event.getSource().toString());
     }
 }
