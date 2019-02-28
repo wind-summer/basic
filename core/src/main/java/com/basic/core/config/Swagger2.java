@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
@@ -48,32 +49,66 @@ public class Swagger2 {
     }*/
 
     /**
+     * 系统接口
      * /api.* [访问的路径匹配,如:SwaggerApiController.java @RequestMapping("/api/v1") 符合该路径匹配]
-     *
      * @return
      */
     @Bean
-    public Docket userApi() {
+    public Docket sysApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+                .groupName("Sys模块")
+                .apiInfo(sysInfo())
                 //.globalOperationParameters(setHeaderToken())
                 // 选择那些路径和api会生成document
                 .select()
                 // 对所有@Api注解进行监控
                 .apis(RequestHandlerSelectors.any())
-//                .paths(PathSelectors.any()) // 对所有路径进行监控[指定匹配路径监控(PathSelectors.regex("/api.*"))]
+                //.paths(PathSelectors.any()) // 对所有路径进行监控[指定匹配路径监控(PathSelectors.regex("/api.*"))]
+                .paths(PathSelectors.regex("/sys.*"))
                 .build()
                 .securitySchemes(securitySchemes());
     }
 
     /**
+     * sys接口配置
      * 确保以下配置的信息可用，否则不能访问
-     *
      * @return
      */
-    private ApiInfo apiInfo() {
+    private ApiInfo sysInfo() {
         return new ApiInfoBuilder()
-                .title(applicationProperties.getSwagger().getTitle())
+                .title("Sys测试API文档")
+                .description(applicationProperties.getSwagger().getDescription())
+                .license(applicationProperties.getSwagger().getLicense())
+                .version(applicationProperties.getSwagger().getVersion())
+                .build();
+    }
+
+    /**
+     * 系统接口
+     * /api.* [访问的路径匹配,如:SwaggerApiController.java @RequestMapping("/api/v1") 符合该路径匹配]
+     * @return
+     */
+    @Bean
+    public Docket demoApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("Demo模块")
+                .apiInfo(demoInfo())
+                //.globalOperationParameters(setHeaderToken())
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.regex("/demo.*"))
+                .build()
+                .securitySchemes(securitySchemes());
+    }
+
+    /**
+     * demo接口配置
+     * 确保以下配置的信息可用，否则不能访问
+     * @return
+     */
+    private ApiInfo demoInfo() {
+        return new ApiInfoBuilder()
+                .title("Demo测试API文档")
                 .description(applicationProperties.getSwagger().getDescription())
                 .license(applicationProperties.getSwagger().getLicense())
                 .version(applicationProperties.getSwagger().getVersion())
