@@ -88,18 +88,4 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-contract-maven-plugin</artifactId>
-                <!-- Don't forget about this value !! -->
-                <extensions>true</extensions>
-                <configuration>
-                    <!-- MvcMockTest为生成本地测试案例的基类 -->
-                    <baseClassForTests>com.springboot.services.producer.MvcMockTest</baseClassForTests>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
