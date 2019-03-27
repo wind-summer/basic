@@ -11,18 +11,18 @@ spring:
       master:
         username: root
         password: 123456
-        url: jdbc:mysql://192.168.81.130:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://192.168.56.101:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.jdbc.Driver
       slave_1:
         username: root
         password: 123456
-        url: jdbc:mysql://192.168.81.130:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://192.168.56.101:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.jdbc.Driver
   redis:
     # REDIS (RedisProperties)
     # Redis数据库索引（默认为0）
     database: 0
-    host: 192.168.81.130         # Redis服务器地址
+    host: 192.168.56.101         # Redis服务器地址
     port: 6379                   # Redis服务器连接端口
     password:                    # Redis服务器连接密码（默认为空）
     jedis:
