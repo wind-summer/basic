@@ -23,12 +23,12 @@ public class MybatisPlusGenerator {
     //private static String OUTPUT_DIR = "/home/wenlongfei/Desktop/code/";
     private static String OUTPUT_DIR = "C:/code";
 
-    private static String MYSQL_URL = "jdbc:mysql://127.0.0.1:3306/framework?characterEncoding=utf8";
+    private static String MYSQL_URL = "jdbc:mysql://192.168.56.101:3306/framework?characterEncoding=utf8";
     private static String MYSQL_USER = "root";
     private static String MYSQL_PWD = "123456";
 
     private static String MODULE_NAME = "sys";
-    private static String[] INCLUDE_TABLES = new String[]{"sys_user_token"};
+    private static String[] INCLUDE_TABLES = new String[]{"sys_log"};
 
     /**
      * <p>

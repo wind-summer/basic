@@ -3,6 +3,7 @@ package com.basic.admin.module.demo.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.basic.core.annotation.SysLog;
 import com.basic.core.listener.MyEvent;
 import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
@@ -47,30 +48,36 @@ public class DemoController extends AbstractApiResultController {
     private final ValueOperations valueOperations;
     private StateMachine<OrderStates, OrderEvents> stateMachine;
 
+    @SysLog("Demo方法test执行")
     @GetMapping("/test")
     @Transactional(rollbackFor = Exception.class)
-    public void test(){
-        stateMachine.start();
+    public String test(){
+        /*stateMachine.start();
         stateMachine.sendEvent(OrderEvents.PAY);
-        stateMachine.sendEvent(OrderEvents.SHIPPING);
+        stateMachine.sendEvent(OrderEvents.SHIPPING);*/
 
-
-       /* Demo demo = demoService.selectById(1);
-        MyEvent event = new MyEvent(demo);
-        SpringContextUtils.applicationContext.publishEvent(event);*/
-        /*SysUser user = CurrentUserUtils.getLogin();
-        valueOperations.set("name","张三");
-        List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));*/
-        /*Demo demo = Demo.builder()
+        Demo demo = Demo.builder()
                 .age(12)
                 .name("马六")
                 .remark("..")
                 .build();
-        demoService.insert(demo);*/
-        /*String test = "1s";
+        demoService.insert(demo);
+
+        //String str = "2j";
+        //Integer i = Integer.valueOf(str);
+
+        /*Demo demo = demoService.selectById(1);
+        MyEvent event = new MyEvent(demo);
+        SpringContextUtils.applicationContext.publishEvent(event);
+        SysUser user = CurrentUserUtils.getLogin();
+        valueOperations.set("name","张三");
+        List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));
+
+        String test = "1s";
         Integer.valueOf(test);*/
 
         log.info("好这个是demo 的测试方法：test");
+        return "sssss";
     }
 }
 

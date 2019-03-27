@@ -35,6 +35,11 @@
             <artifactId>spring-statemachine-core</artifactId>
             <version>1.2.0.RELEASE</version>
         </dependency>
+        <!-- aop -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!-- itextpdf -->
         <dependency>
             <groupId>com.itextpdf</groupId>
