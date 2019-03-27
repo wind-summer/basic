@@ -8,6 +8,7 @@ import com.basic.core.listener.MyEvent;
 import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
 import com.basic.core.module.sys.entity.SysUser;
+import com.basic.core.rabbitmq.MsgProducer;
 import com.basic.core.statemachine.entity.OrderEvents;
 import com.basic.core.statemachine.entity.OrderStates;
 import com.basic.core.utils.CurrentUserUtils;
@@ -15,6 +16,7 @@ import com.basic.core.utils.SpringContextUtils;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -48,6 +50,8 @@ public class DemoController extends AbstractApiResultController {
     private final ValueOperations valueOperations;
     private StateMachine<OrderStates, OrderEvents> stateMachine;
 
+    private MsgProducer msgProducer;
+
     @SysLog("Demo方法test执行")
     @GetMapping("/test")
     @Transactional(rollbackFor = Exception.class)
@@ -78,6 +82,12 @@ public class DemoController extends AbstractApiResultController {
 
         log.info("好这个是demo 的测试方法：test");
         return "sssss";
+    }
+
+    @GetMapping("/test1")
+    @Transactional(rollbackFor = Exception.class)
+    public void test2(){
+        msgProducer.sendMsg("你好啊！！！");
     }
 }
 
