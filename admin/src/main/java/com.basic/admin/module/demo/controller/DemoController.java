@@ -61,11 +61,15 @@ public class DemoController extends AbstractApiResultController {
         /*SysUser user = CurrentUserUtils.getLogin();
         valueOperations.set("name","张三");
         List<Demo> demos = demoService.selectList(new EntityWrapper<Demo>().eq("id", 1L));*/
-        /*Demo demo = new Demo();
-        demo.setAge(12).setName("马六").setRemark("..");
+        /*Demo demo = Demo.builder()
+                .age(12)
+                .name("马六")
+                .remark("..")
+                .build();
         demoService.insert(demo);*/
         /*String test = "1s";
         Integer.valueOf(test);*/
+
         log.info("好这个是demo 的测试方法：test");
     }
 }

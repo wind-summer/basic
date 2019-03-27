@@ -2,6 +2,7 @@ package com.basic.core.module.demo.entity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.basic.core.mvc.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -19,6 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ToString
+@Builder
 @TableName("my_demo")
 public class Demo extends BaseEntity<Demo> {
 
