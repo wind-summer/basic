@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@RabbitListener(queues = RabbitmqConfig.QUEUE_A)
-public class MsgReceiver {
+@RabbitListener(queues = RabbitmqConfig.QUEUE_MSG_A)
+public class MsgQueueAReceiver {
 
     @RabbitHandler
     public void process(String content) {
-        log.info("MsgReceiver接收处理队列A当中的消息： " + content);
+        log.info("Receiver接收处理Msg队列A当中的消息： " + content);
     }
 }

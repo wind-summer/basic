@@ -1,6 +1,7 @@
 package com.basic.admin.module.demo.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.basic.core.annotation.SysLog;
@@ -8,7 +9,10 @@ import com.basic.core.listener.MyEvent;
 import com.basic.core.module.demo.entity.Demo;
 import com.basic.core.module.demo.service.DemoService;
 import com.basic.core.module.sys.entity.SysUser;
+import com.basic.core.rabbitmq.CommonSender;
 import com.basic.core.rabbitmq.MsgProducer;
+import com.basic.core.rabbitmq.RabbitmqConfig;
+import com.basic.core.rabbitmq.entity.EmailMq;
 import com.basic.core.statemachine.entity.OrderEvents;
 import com.basic.core.statemachine.entity.OrderStates;
 import com.basic.core.utils.CurrentUserUtils;
@@ -17,6 +21,7 @@ import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -29,7 +34,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.basic.core.mvc.controller.AbstractApiResultController;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -51,6 +58,9 @@ public class DemoController extends AbstractApiResultController {
     private StateMachine<OrderStates, OrderEvents> stateMachine;
 
     private MsgProducer msgProducer;
+    private CommonSender commonSender;
+
+    private RabbitTemplate rabbitTemplate;
 
     @SysLog("Demo方法test执行")
     @GetMapping("/test")
@@ -87,7 +97,24 @@ public class DemoController extends AbstractApiResultController {
     @GetMapping("/test1")
     @Transactional(rollbackFor = Exception.class)
     public void test2(){
-        msgProducer.sendMsg("你好啊！！！");
+        /*rabbitTemplate.setConfirmCallback((correlationData, b, cause) -> {
+            log.info(" -----回调id:" + correlationData);
+            if (b) {
+                log.info("消息成功消费11111");
+            } else {
+                log.info("消息消费失败11111:" + cause);
+            }
+        });*/
+        //rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_A, RabbitmqConfig.ROUTINGKEY_A, "你是什么地干活");
+        //msgProducer.sendMsg("你好啊！！！");
+        EmailMq emailMq = EmailMq.builder()
+                .emailAddresses(Arrays.asList("wenlongfei_person@163.com", "wenlf@litsoft.com.cn"))
+                .msg("你好啊，大兄弟！")
+                .build();
+        commonSender.sendMsg(JSON.toJSONString(emailMq));
+
+
+
     }
 }
 

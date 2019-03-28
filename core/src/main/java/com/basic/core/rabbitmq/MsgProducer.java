@@ -24,6 +24,8 @@ public class MsgProducer implements RabbitTemplate.ConfirmCallback {
     private RabbitTemplate rabbitTemplate;
 
     public void sendMsg(String content) {
+        //设置回调参数，只有设置了才能触发回调
+        rabbitTemplate.setConfirmCallback(this);
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
         //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列A
         rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_A, RabbitmqConfig.ROUTINGKEY_A, content, correlationId);
