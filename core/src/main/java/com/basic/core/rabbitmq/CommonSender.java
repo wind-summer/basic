@@ -20,21 +20,21 @@ import java.util.UUID;
 @Component
 public class CommonSender {
 
-    @Autowired
     private RabbitTemplate rabbitTemplate;
 
     /**
      * 设置回调函数
      */
-    public CommonSender(){
+    public CommonSender(RabbitTemplate rabbitTemplate){
         //初始化设置回调函数
-        /*this.rabbitTemplate.setConfirmCallback((correlationData, b, cause) -> {
+        this.rabbitTemplate = rabbitTemplate;
+        this.rabbitTemplate.setConfirmCallback((correlationData, b, cause) -> {
             if (b) {
                 log.info("消息id:{},消息成功消费!", correlationData);
             } else {
                 log.error("消息id:{},消息消费失败,原因：{}", correlationData, cause);
             }
-        });*/
+        });
     }
 
     /**
@@ -49,22 +49,14 @@ public class CommonSender {
      * 发送短信消息
      */
     public void sendMsg(String content){
-        //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列A
-        rabbitTemplate.convertAndSend(RabbitmqConfig.EXCHANGE_C, RabbitmqConfig.ROUTINGKEY_A, content, getCorrelationId());
+        rabbitTemplate.convertAndSend(RabbitmqConfig.DIRECT_EXCHANGE_A, RabbitmqConfig.ROUTINGKEY_MSG, content, getCorrelationId());
     }
 
     /**
      * 单个发送邮箱消息
      */
     public void singleSendEmail(String content){
-        rabbitTemplate.convertAndSend(content);
-    }
-
-    /**
-     * 群发送邮箱消息
-     */
-    public void groupSendEmail(String content){
-
+        rabbitTemplate.convertAndSend(RabbitmqConfig.DIRECT_EXCHANGE_A, RabbitmqConfig.ROUTINGKEY_EMAIL, content, getCorrelationId());
     }
 
 }

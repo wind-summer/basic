@@ -112,6 +112,7 @@ public class DemoController extends AbstractApiResultController {
                 .msg("你好啊，大兄弟！")
                 .build();
         commonSender.sendMsg(JSON.toJSONString(emailMq));
+        commonSender.singleSendEmail(JSON.toJSONString(emailMq));
 
 
 
