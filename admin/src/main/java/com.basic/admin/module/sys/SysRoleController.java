@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysRole;
 import com.basic.core.module.sys.entity.request.SysRoleAdd;
 import com.basic.core.module.sys.entity.request.SysRoleUpdate;
+import com.basic.core.module.sys.entity.response.SysRoleInfo;
 import com.basic.core.module.sys.service.SysRoleService;
 import com.basic.core.utils.ApiResult;
 import io.swagger.annotations.Api;
@@ -26,6 +27,13 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "角色管理")
 public class SysRoleController {
     private SysRoleService sysRoleService;
+
+    @ApiOperation("角色列表")
+    @GetMapping("/role/{id}/detail")
+    public SysRoleInfo info(@PathVariable Long id){
+        SysRoleInfo sysRoleInfo = sysRoleService.detail(id);
+        return sysRoleInfo;
+    }
 
     @ApiOperation("角色列表")
     @GetMapping("/roles")

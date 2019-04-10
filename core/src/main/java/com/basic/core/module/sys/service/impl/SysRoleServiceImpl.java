@@ -3,6 +3,7 @@ package com.basic.core.module.sys.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.exception.BizException;
+import com.basic.core.module.sys.dao.SysMenuDao;
 import com.basic.core.module.sys.dao.SysRoleMenuDao;
 import com.basic.core.module.sys.entity.SysMenu;
 import com.basic.core.module.sys.entity.SysRole;
@@ -11,6 +12,7 @@ import com.basic.core.module.sys.entity.SysRoleMenu;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysRoleAdd;
 import com.basic.core.module.sys.entity.request.SysRoleUpdate;
+import com.basic.core.module.sys.entity.response.SysRoleInfo;
 import com.basic.core.module.sys.service.SysRoleService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.utils.Util;
@@ -25,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,6 +43,7 @@ import java.util.List;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> implements SysRoleService {
 
     private SysRoleDao sysRoleDao;
+    private SysMenuDao sysMenuDao;
     private SysRoleMenuDao sysRoleMenuDao;
     /**
      * 分页查询
@@ -123,5 +127,35 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
             idList.add(Long.valueOf(id));
         }
         this.baseMapper.deleteBatchIds(idList);
+    }
+
+    /**
+     * 根据id查询相应的选中菜单
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public SysRoleInfo detail(Long id) {
+        SysRole role = this.baseMapper.selectById(id);
+        SysRoleInfo roleInfo = new SysRoleInfo();
+        BeanUtils.copyProperties(role, roleInfo);
+        //查询菜单和menu的关系
+        List<SysRoleMenu> sysRoleMenus = sysRoleMenuDao
+                .selectList(new EntityWrapper<SysRoleMenu>().eq("role_id", id));
+        List<Long> menuIds = sysRoleMenus.stream()
+                .map(sysRoleMenu -> sysRoleMenu.getMenuId()).collect(Collectors.toList());
+        /*List<Long> filterMenuIds = new ArrayList<>();
+        menuIds.stream().forEach(menuId -> {
+            Integer count = sysMenuDao.selectCount(new EntityWrapper<SysMenu>().eq("parent_id", menuId));
+            if(count == 0){
+                filterMenuIds.add(menuId);
+            }
+        });*/
+        List<Long> filterMenuIds = menuIds.stream().filter(menuId -> {
+            Integer count = sysMenuDao.selectCount(new EntityWrapper<SysMenu>().eq("parent_id", menuId));
+            return count == 0;
+        }).collect(Collectors.toList());
+        return roleInfo.setMenuIds(filterMenuIds);
     }
 }

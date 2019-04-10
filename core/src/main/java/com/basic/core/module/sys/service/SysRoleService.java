@@ -6,6 +6,7 @@ import com.basic.core.module.sys.entity.SysRole;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysRoleAdd;
 import com.basic.core.module.sys.entity.request.SysRoleUpdate;
+import com.basic.core.module.sys.entity.response.SysRoleInfo;
 
 /**
  * <p>
@@ -42,4 +43,11 @@ public interface SysRoleService extends IService<SysRole> {
      * @param ids
      */
     void deleteRoles(String ids);
+
+    /**
+     * 根据id查询相应的选中菜单
+     * @param id
+     * @return
+     */
+    SysRoleInfo detail(Long id);
 }
