@@ -127,6 +127,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
             idList.add(Long.valueOf(id));
         }
         this.baseMapper.deleteBatchIds(idList);
+        //删除角色关联的菜单数据
+        sysRoleMenuDao.delete(new EntityWrapper<SysRoleMenu>().in("role_id", idList));
     }
 
     /**
@@ -138,6 +140,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     @Override
     public SysRoleInfo detail(Long id) {
         SysRole role = this.baseMapper.selectById(id);
+        if(role == null){
+            throw new BizException("没有数据");
+        }
         SysRoleInfo roleInfo = new SysRoleInfo();
         BeanUtils.copyProperties(role, roleInfo);
         //查询菜单和menu的关系

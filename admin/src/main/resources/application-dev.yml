@@ -47,9 +47,12 @@ mybatis-plus:
   global-config:
     #是否刷新sql,修改mapper之后不用重启
     refresh: true
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 logging:
   level:
-    com.baomidou: debug
+    com.baomidou: DEBUG
 
 # 应用自定义配置
 application:
