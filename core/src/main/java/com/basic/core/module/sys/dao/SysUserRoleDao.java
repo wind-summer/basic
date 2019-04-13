@@ -26,5 +26,5 @@ public interface SysUserRoleDao extends BaseMapper<SysUserRole> {
      * 保存用户权限
      * @param map
      */
-    void save(Map<String, Object> map);
+    //void save(Map<String, Object> map);
 }

@@ -38,6 +38,13 @@ public class SysUserController extends AbstractApiResultController {
         return pageList;
     }
 
+    @ApiOperation("用户列表")
+    @GetMapping("/user/{id}/detail")
+    public SysUser page(@PathVariable Long id){
+        SysUser userInfo = sysUserService.userInfo(id);
+        return userInfo;
+    }
+
     @ApiOperation("添加用户")
     @PostMapping("/user")
     public ApiResult save(@RequestBody @Validated SysUserAdd sysUser){

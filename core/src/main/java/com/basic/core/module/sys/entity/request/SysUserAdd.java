@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * Created by wenlf on 2018/10/12
@@ -52,4 +53,10 @@ public class SysUserAdd {
      */
     @ApiModelProperty("状态：ENABLE：启用 DISABLE:禁用")
     private SysUserStatus status;
+
+    /**
+     * 分配的角色Id列表
+     */
+    @ApiModelProperty("分配的角色Id列表")
+    private List<Long> roleIds;
 }

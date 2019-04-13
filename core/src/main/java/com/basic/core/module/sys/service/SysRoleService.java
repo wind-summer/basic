@@ -3,10 +3,12 @@ package com.basic.core.module.sys.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.basic.core.module.sys.entity.SysRole;
-import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysRoleAdd;
 import com.basic.core.module.sys.entity.request.SysRoleUpdate;
+import com.basic.core.module.sys.entity.response.RoleDrop;
 import com.basic.core.module.sys.entity.response.SysRoleInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -50,4 +52,10 @@ public interface SysRoleService extends IService<SysRole> {
      * @return
      */
     SysRoleInfo detail(Long id);
+
+    /**
+     * 角色下拉列表
+     * @return
+     */
+    List<RoleDrop> roleDropList();
 }

@@ -31,6 +31,13 @@ public interface SysUserService extends IService<SysUser> {
     SysUser queryByUserName(String username);
 
     /**
+     * 根据id查询用户信息，包括角色
+     * @param id
+     * @return
+     */
+    SysUser userInfo(Long id);
+
+    /**
      * 分页查询
      * @param page
      * @param usernameOrName 条件

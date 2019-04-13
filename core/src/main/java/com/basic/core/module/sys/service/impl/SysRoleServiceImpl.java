@@ -2,23 +2,22 @@ package com.basic.core.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.exception.BizException;
 import com.basic.core.module.sys.dao.SysMenuDao;
+import com.basic.core.module.sys.dao.SysRoleDao;
 import com.basic.core.module.sys.dao.SysRoleMenuDao;
 import com.basic.core.module.sys.entity.SysMenu;
 import com.basic.core.module.sys.entity.SysRole;
-import com.basic.core.module.sys.dao.SysRoleDao;
 import com.basic.core.module.sys.entity.SysRoleMenu;
-import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysRoleAdd;
 import com.basic.core.module.sys.entity.request.SysRoleUpdate;
+import com.basic.core.module.sys.entity.response.RoleDrop;
 import com.basic.core.module.sys.entity.response.SysRoleInfo;
 import com.basic.core.module.sys.service.SysRoleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.utils.Util;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -162,5 +161,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
             return count == 0;
         }).collect(Collectors.toList());
         return roleInfo.setMenuIds(filterMenuIds);
+    }
+
+    /**
+     * 角色下拉列表
+     *
+     * @return
+     */
+    @Override
+    public List<RoleDrop> roleDropList() {
+        List<SysRole> roles = this.baseMapper.selectList(new EntityWrapper<SysRole>());
+        return roles.stream().map(a->{
+            RoleDrop roleDrop = new RoleDrop();
+            return roleDrop.setId(a.getId()).setName(a.getRoleName());
+        }).collect(Collectors.toList());
     }
 }

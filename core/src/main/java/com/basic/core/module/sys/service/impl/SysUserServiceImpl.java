@@ -7,6 +7,7 @@ import com.basic.core.exception.BizException;
 import com.basic.core.module.sys.constant.SysUserStatus;
 import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
+import com.basic.core.module.sys.entity.SysUserRole;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
 import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -81,7 +83,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         sysUserDao.insert(newUser);
 
         //保存用户与角色关系
-        sysUserRoleService.saveOrUpdate(newUser.getId(), newUser.getRoleIdList());
+        sysUserRoleService.saveOrUpdate(newUser.getId(), user.getRoleIds());
     }
 
     /**
@@ -146,6 +148,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         BeanUtils.copyProperties(user, oldUser);
         oldUser.setStatus(user.getStatus() !=null ? user.getStatus().getValue() : SysUserStatus.ENABLE.getValue());
         this.baseMapper.updateById(oldUser);
+
+        //保存用户与角色关系
+        sysUserRoleService.saveOrUpdate(oldUser.getId(), user.getRoleIds());
     }
 
     /**
@@ -178,5 +183,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     public void userSwitch(SysUserSwitch userSwitch) {
         List<Long> ids = getAdministratorIds();
         log.info("测试ids:{}",ids);
+    }
+
+    /**
+     * 根据id查询用户信息，包括角色
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public SysUser userInfo(Long id) {
+        SysUser user = this.baseMapper.selectById(id);
+        if(user == null){
+            return null;
+        }
+        List<SysUserRole> userRoles = sysUserRoleService.selectList(new EntityWrapper<SysUserRole>().eq("user_id", user.getId()));
+        List<Long> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        return user.setRoleIdList(roleIds);
     }
 }
