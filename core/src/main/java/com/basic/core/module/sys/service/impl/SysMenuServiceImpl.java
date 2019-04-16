@@ -182,4 +182,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         }
         this.baseMapper.deleteById(id);
     }
+
+    /**
+     * 根据用户id查询对应的菜单权限
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<SysMenu> getMenusByUserId(Long userId) {
+        List<SysMenu> menus = this.baseMapper.selectMenusByUserId(userId);
+        return getMenuTrees(menus);
+    }
 }

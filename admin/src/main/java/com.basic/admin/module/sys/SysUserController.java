@@ -6,6 +6,7 @@ import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
 import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
+import com.basic.core.module.sys.entity.response.AfterLoginInfo;
 import com.basic.core.module.sys.service.SysUserService;
 import com.basic.core.mvc.controller.AbstractApiResultController;
 import com.basic.core.utils.ApiResult;
@@ -71,6 +72,12 @@ public class SysUserController extends AbstractApiResultController {
     public ApiResult userSwitch(@RequestBody @Validated SysUserSwitch userSwitch){
         sysUserService.userSwitch(userSwitch);
         return ApiResult.ok("操作成功");
+    }
+
+    @ApiOperation("获取登录信息")
+    @GetMapping("/user/loginInfo")
+    public AfterLoginInfo userSwitch(){
+        return sysUserService.getLongInfo();
     }
 }
 

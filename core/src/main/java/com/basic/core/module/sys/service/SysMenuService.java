@@ -44,4 +44,11 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param id
      */
     void deleteMenus(Long id);
+
+    /**
+     *  根据用户id查询对应的菜单权限
+     * @param userId
+     * @return
+     */
+    List<SysMenu> getMenusByUserId(Long userId);
 }

@@ -6,6 +6,7 @@ import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
 import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
+import com.basic.core.module.sys.entity.response.AfterLoginInfo;
 
 /**
  * <p>
@@ -69,4 +70,10 @@ public interface SysUserService extends IService<SysUser> {
      * @param userSwitch
      */
     void userSwitch(SysUserSwitch userSwitch);
+
+    /**
+     * 获取当前登录用户的登录信息，权限等
+     * @return
+     */
+    AfterLoginInfo getLongInfo();
 }

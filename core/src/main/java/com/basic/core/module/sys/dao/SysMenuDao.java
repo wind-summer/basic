@@ -1,7 +1,8 @@
 package com.basic.core.module.sys.dao;
 
-import com.basic.core.module.sys.entity.SysMenu;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.basic.core.module.sys.entity.SysMenu;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,11 @@ public interface SysMenuDao extends BaseMapper<SysMenu> {
      * @return
      */
     List<SysMenu> queryList(Map<String, Object> map);
+
+    /**
+     * 根据用户Id查询锁对应的权限
+     * @param userId
+     * @return
+     */
+    List<SysMenu> selectMenusByUserId(@Param("userId") Long userId);
 }

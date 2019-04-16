@@ -2,18 +2,21 @@ package com.basic.core.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.config.ApplicationProperties;
 import com.basic.core.exception.BizException;
 import com.basic.core.module.sys.constant.SysUserStatus;
-import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.dao.SysUserDao;
+import com.basic.core.module.sys.entity.SysMenu;
+import com.basic.core.module.sys.entity.SysUser;
 import com.basic.core.module.sys.entity.SysUserRole;
 import com.basic.core.module.sys.entity.request.SysUserAdd;
 import com.basic.core.module.sys.entity.request.SysUserSwitch;
 import com.basic.core.module.sys.entity.request.SysUserUpdate;
+import com.basic.core.module.sys.entity.response.AfterLoginInfo;
+import com.basic.core.module.sys.service.SysMenuService;
 import com.basic.core.module.sys.service.SysUserRoleService;
 import com.basic.core.module.sys.service.SysUserService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.utils.CurrentUserUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +47,7 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> implements SysUserService {
     private SysUserDao sysUserDao;
     private SysUserRoleService sysUserRoleService;
+    private SysMenuService sysMenuService;
     private ApplicationProperties applicationProperties;
 
     /**
@@ -200,5 +204,25 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
         List<SysUserRole> userRoles = sysUserRoleService.selectList(new EntityWrapper<SysUserRole>().eq("user_id", user.getId()));
         List<Long> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
         return user.setRoleIdList(roleIds);
+    }
+
+    /**
+     * 获取当前登录用户的登录信息，权限等
+     *
+     * @return
+     */
+    @Override
+    public AfterLoginInfo getLongInfo() {
+        AfterLoginInfo afterLoginInfo = new AfterLoginInfo();
+        SysUser user = CurrentUserUtils.getLogin();
+        afterLoginInfo.setUser(user);
+        List<Long> systemUserIds = getAdministratorIds();
+        //如果属于root超级用户，则返回所有菜单，不属于则查询当前用户的权限
+        if(systemUserIds.contains(user.getId())){
+            afterLoginInfo.setMenus(sysMenuService.findAllMenus());
+        }else{
+            afterLoginInfo.setMenus(sysMenuService.getMenusByUserId(user.getId()));
+        }
+        return afterLoginInfo;
     }
 }
