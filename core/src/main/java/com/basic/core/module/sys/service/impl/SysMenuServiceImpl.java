@@ -40,7 +40,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
      */
     @Override
     public List<SysMenu> findAllMenus() {
-        List<SysMenu> list = this.baseMapper.selectList(new EntityWrapper<SysMenu>());
+        List<SysMenu> list = this.baseMapper.selectList(new EntityWrapper<SysMenu>().orderBy("order_num"));
         List<SysMenu> menuTrees = getMenuTrees(list);
         return menuTrees;
     }
@@ -165,7 +165,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenu> impleme
         }
         BeanUtils.copyProperties(sysMenu, oldSysMenu);
         oldSysMenu.setType(sysMenu.getType().getValue());
-        this.baseMapper.updateById(oldSysMenu);
+        baseMapper.updateAllColumnById(oldSysMenu);
     }
 
     /**

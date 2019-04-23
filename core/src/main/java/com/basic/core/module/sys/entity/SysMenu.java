@@ -44,6 +44,10 @@ public class SysMenu extends BaseEntity<SysMenu> {
      */
     private String icon;
     /**
+     * 组件-对应router-view的name和router的conponent
+     */
+    private String component;
+    /**
      * 排序
      */
     @TableField("order_num")

@@ -37,6 +37,12 @@ public class SysMenuUpdate {
     private String name;
 
     /**
+     * 组件-对应router-view的name和router的conponent
+     */
+    @ApiModelProperty("组件-对应router-view的name和router的conponent")
+    private String component;
+
+    /**
      * 上级菜单ID
      */
     @ApiModelProperty("上级菜单ID")

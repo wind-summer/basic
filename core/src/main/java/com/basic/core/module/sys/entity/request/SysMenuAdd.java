@@ -43,6 +43,12 @@ public class SysMenuAdd {
     private String url;
 
     /**
+     * 组件-对应router-view的name和router的conponent
+     */
+    @ApiModelProperty("组件-对应router-view的name和router的conponent")
+    private String component;
+
+    /**
      * 图标
      */
     @ApiModelProperty("图标")
