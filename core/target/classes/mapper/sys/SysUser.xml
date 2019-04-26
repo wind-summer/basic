@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basic.core.module.sys.dao.SysUserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.basic.core.module.sys.entity.SysUser">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="salt" property="salt" />
+        <result column="email" property="email" />
+        <result column="mobile" property="mobile" />
+        <result column="avatar" property="avatar" />
+        <result column="status" property="status" />
+        <result column="dept_id" property="deptId" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 查询用户的所有权限 -->
+    <select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
+		where ur.user_id = #{userId}
+	</select>
+
+    <select id="selectSysUserPages" resultType="com.basic.core.module.sys.entity.SysUser">
+        select * from sys_user u
+        where 1=1
+        <if test="ids != null and ids.size() > 0">
+            and id not in 
+            <foreach collection="ids" item="item" index="index" open="("  close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="usernameOrName != null and usernameOrName != ''">
+            and u.username like concat('%', #{usernameOrName}, '%') OR u.name like concat('%', #{usernameOrName}, '%')
+        </if>
+    </select>
+
+    <update id="updatePassword">
+        update sys_user set password = #{password}, salt = #{salt} where username = #{username}
+    </update>
+
+</mapper>

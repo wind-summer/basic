@@ -28,7 +28,7 @@ public class MybatisPlusGenerator {
     private static String MYSQL_PWD = "123456";
 
     private static String MODULE_NAME = "sys";
-    private static String[] INCLUDE_TABLES = new String[]{"sys_log"};
+    private static String[] INCLUDE_TABLES = new String[]{"sys_dictionary"};
 
     /**
      * <p>

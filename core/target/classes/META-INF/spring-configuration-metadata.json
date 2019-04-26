@@ -1,0 +1,38 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.basic.core.config.ApplicationProperties",
+      "name": "application",
+      "type": "com.basic.core.config.ApplicationProperties"
+    },
+    {
+      "sourceType": "com.basic.core.config.ApplicationProperties",
+      "name": "application.async",
+      "type": "com.basic.core.config.ApplicationProperties$Async"
+    },
+    {
+      "sourceType": "com.basic.core.config.ApplicationProperties",
+      "name": "application.security",
+      "type": "com.basic.core.config.ApplicationProperties$Security"
+    },
+    {
+      "sourceType": "com.basic.core.config.ApplicationProperties",
+      "name": "application.swagger",
+      "type": "com.basic.core.config.ApplicationProperties$Swagger"
+    },
+    {
+      "sourceType": "com.basic.core.datasource.DataBaseConfig",
+      "name": "spring.datasource.multiple.master",
+      "sourceMethod": "masterDataSource()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "com.basic.core.datasource.DataBaseConfig",
+      "name": "spring.datasource.multiple.slave1",
+      "sourceMethod": "slaveDataSourceOne()",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}
