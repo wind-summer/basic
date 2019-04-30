@@ -1,5 +1,6 @@
 package com.basic.core.module.sys.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysDictionary;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -13,4 +14,24 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface SysDictionaryService extends IService<SysDictionary> {
 
+    /**
+     * 分页
+     * @param page
+     * @param dictName
+     * @param dictType
+     * @return
+     */
+    Page<SysDictionary> pages(Page<SysDictionary> page, String dictType, String dictName, String dictValue, Long pid);
+
+    /**
+     * 新增
+     * @param dictionary
+     */
+    void save(SysDictionary dictionary);
+
+    /**
+     * 修改
+     * @param dictionary
+     */
+    void update(SysDictionary dictionary);
 }

@@ -100,7 +100,8 @@ public class Swagger2 {
 
     private List<ApiKey> securitySchemes() {
         return Lists.newArrayList(
-                new ApiKey("Authorization", "token", "header"));
+                new ApiKey("Authorization", "token", "header")
+        );
     }
 
     private List<Parameter> setHeaderToken() {
