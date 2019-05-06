@@ -3,6 +3,7 @@ package com.basic.core.module.sys.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.basic.core.module.sys.entity.SysDictionary;
 import com.baomidou.mybatisplus.service.IService;
+import com.basic.core.module.sys.entity.response.DictionaryDTO;
 
 /**
  * <p>
@@ -34,4 +35,17 @@ public interface SysDictionaryService extends IService<SysDictionary> {
      * @param dictionary
      */
     void update(SysDictionary dictionary);
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    void deleteBatch(String ids);
+
+    /**
+     * 根据字典类型查询字典
+     * @param dictType
+     * @return
+     */
+    DictionaryDTO findDictionariesByDictType(String dictType);
 }
