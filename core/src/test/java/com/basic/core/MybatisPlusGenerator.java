@@ -27,8 +27,8 @@ public class MybatisPlusGenerator {
     private static String MYSQL_USER = "root";
     private static String MYSQL_PWD = "123456";
 
-    private static String MODULE_NAME = "sys";
-    private static String[] INCLUDE_TABLES = new String[]{"sys_dictionary"};
+    private static String MODULE_NAME = "job";
+    private static String[] INCLUDE_TABLES = new String[]{"schedule_job_log","schedule_job"};
 
     /**
      * <p>

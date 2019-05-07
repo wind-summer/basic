@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * 系统配置Redis
  *
- * @author csg
+ * @author wenlf
  *
  * @date 2017/7/18 21:08
  */
