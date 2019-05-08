@@ -25,8 +25,8 @@ public class ScheduleJobController {
 
 	@ApiOperation("定时任务列表")
 	@GetMapping("/page")
-	public Page<ScheduleJobEntity> page(Page<ScheduleJobEntity> page, String beanName, String method){
-		Page<ScheduleJobEntity> pageList = scheduleJobService.pages(page, beanName, method);
+	public Page<ScheduleJobEntity> page(Page<ScheduleJobEntity> page, String beanName, String methodName){
+		Page<ScheduleJobEntity> pageList = scheduleJobService.pages(page, beanName, methodName);
 		return pageList;
 	}
 
@@ -37,7 +37,7 @@ public class ScheduleJobController {
 	@PostMapping("/save")
 	public ApiResult save(@RequestBody ScheduleJobEntity scheduleJob){
 		scheduleJobService.save(scheduleJob);
-		return ApiResult.ok();
+		return ApiResult.ok("保存成功");
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class ScheduleJobController {
 	@PutMapping("/update")
 	public ApiResult update(@RequestBody ScheduleJobEntity scheduleJob){
 		scheduleJobService.update(scheduleJob);
-		return ApiResult.ok();
+		return ApiResult.ok("修改成功");
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class ScheduleJobController {
 	@PutMapping("/run")
 	public ApiResult run(@RequestBody Long[] jobIds){
 		scheduleJobService.run(jobIds);
-		return ApiResult.ok();
+		return ApiResult.ok("执行成功");
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class ScheduleJobController {
 	@PutMapping("/pause")
 	public ApiResult pause(@RequestBody Long[] jobIds){
 		scheduleJobService.pause(jobIds);
-		return ApiResult.ok();
+		return ApiResult.ok("暂停成功");
 	}
 	
 	/**
@@ -77,7 +77,17 @@ public class ScheduleJobController {
 	@PutMapping("/resume")
 	public ApiResult resume(@RequestBody Long[] jobIds){
 		scheduleJobService.resume(jobIds);
-		return ApiResult.ok();
+		return ApiResult.ok("恢复成功");
 	}
+
+    /**
+     * 删除定时任务
+     */
+    @SysLog("删除定时任务")
+    @DeleteMapping("/{jobIds}")
+    public ApiResult delete(@PathVariable String jobIds){
+        scheduleJobService.delete(jobIds);
+        return ApiResult.ok("删除成功");
+    }
 
 }

@@ -10,12 +10,14 @@ import com.basic.core.module.job.utils.ScheduleUtils;
 import com.basic.core.utils.Constant;
 import com.basic.core.utils.Constant.ScheduleStatus;
 import org.apache.commons.lang.StringUtils;
+import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 /**
  * <p>
@@ -34,21 +36,38 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     private ScheduleJobDao schedulerJobDao;
 
     /**
+     * 项目启动时，初始化定时器
+     */
+    @PostConstruct
+    public void init(){
+        List<ScheduleJobEntity> scheduleJobList = schedulerJobDao.selectByMap(new HashMap<>());
+        for(ScheduleJobEntity scheduleJob : scheduleJobList){
+            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getId());
+            //如果不存在，则创建
+            if(cronTrigger == null) {
+                ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
+            }else {
+                ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
+            }
+        }
+    }
+
+    /**
      * 分页查询
      *
      * @param page
      * @param beanName bean名称
-     * @param method   方法名称
+     * @param methodName   方法名称
      * @return
      */
     @Override
-    public Page<ScheduleJobEntity> pages(Page<ScheduleJobEntity> page, String beanName, String method) {
+    public Page<ScheduleJobEntity> pages(Page<ScheduleJobEntity> page, String beanName, String methodName) {
         EntityWrapper ew = new EntityWrapper<ScheduleJobEntity>();
         if(!StringUtils.isEmpty(beanName)){
             ew.like("bean_name", beanName);
         }
-        if(!StringUtils.isEmpty(method)){
-            ew.like("method", method);
+        if(!StringUtils.isEmpty(methodName)){
+            ew.like("method_name", methodName);
         }
         return this.selectPage(page, ew);
     }
@@ -63,8 +82,8 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     public void save(ScheduleJobEntity scheduleJobEntity) {
         scheduleJobEntity.setCreateTime(new Date());
         scheduleJobEntity.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
-        schedulerJobDao.insert(scheduleJobEntity);
         ScheduleUtils.createScheduleJob(scheduler, scheduleJobEntity);
+        schedulerJobDao.insert(scheduleJobEntity);
     }
 
     /**
@@ -118,7 +137,24 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
         for(Long jobId : jobIds){
             ScheduleUtils.resumeJob(scheduler, jobId);
         }
-        this.update(new ScheduleJobEntity().setStatus(ScheduleStatus.PAUSE.getValue()), new EntityWrapper<ScheduleJobEntity>().in("id", jobIds));
+        this.update(new ScheduleJobEntity().setStatus(ScheduleStatus.NORMAL.getValue()), new EntityWrapper<ScheduleJobEntity>().in("id", jobIds));
         //updateBatch(jobIds, ScheduleStatus.NORMAL.getValue());
+    }
+
+    /**
+     * 删除任务
+     *
+     * @param jobIds
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(String jobIds) {
+        String[] idArr = jobIds.split(",");
+        List<Long> idList = new ArrayList<>();
+        for(String jobId : idArr){
+            ScheduleUtils.deleteScheduleJob(scheduler, Long.valueOf(jobId));
+            idList.add(Long.valueOf(jobId));
+        }
+        this.baseMapper.deleteBatchIds(idList);
     }
 }

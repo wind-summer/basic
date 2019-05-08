@@ -19,10 +19,10 @@ public interface ScheduleJobService extends IService<ScheduleJobEntity> {
      * 分页查询
      * @param page
      * @param beanName bean名称
-     * @param method   方法名称
+     * @param methodName   方法名称
      * @return
      */
-    Page<ScheduleJobEntity> pages(Page<ScheduleJobEntity> page, String beanName, String method);
+    Page<ScheduleJobEntity> pages(Page<ScheduleJobEntity> page, String beanName, String methodName);
 
     /**
      * 保存
@@ -53,4 +53,10 @@ public interface ScheduleJobService extends IService<ScheduleJobEntity> {
      * @param jobIds
      */
     void resume(Long[] jobIds);
+
+    /**
+     * 删除任务
+     * @param jobIds
+     */
+    void delete(String jobIds);
 }
