@@ -15,6 +15,16 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     default-property-inclusion: non_null
     serialization.write_dates_as_timestamps: false
+  activiti:
+    database-schema-update: true
+    history-level: full
+    check-process-definitions: false
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml

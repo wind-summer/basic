@@ -44,6 +44,12 @@ public class SysUserUpdate {
     private String mobile;
 
     /**
+     * 头像
+     */
+    @ApiModelProperty("头像")
+    private String avatar;
+
+    /**
      * 状态
      */
     @ApiModelProperty("状态：ENABLE：启用 DISABLE:禁用")

@@ -75,6 +75,7 @@ application:
     description: API是一个基于Rest规范的开发API平台,响应数据统一格式：其中code等于0成功，非0错误，错误信息见msg。{"code":0,"msg":"string","data":{}}
     license: Apache license
     version: 1.0
+    domainName: http://localhost:8090/admin
   #权限安全配置
   security:
     # Token 有效时间，单位秒

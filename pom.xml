@@ -44,6 +44,8 @@
         <kaptcha.version>0.0.9</kaptcha.version>
         <statemachine.version>1.2.0.RELEASE</statemachine.version>
         <fastjson.version>1.2.56</fastjson.version>
+        <activiti.version>6.0.0</activiti.version>
+        <hutool.version>4.5.9</hutool.version>
     </properties>
 
     <dependencies>

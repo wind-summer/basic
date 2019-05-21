@@ -57,6 +57,10 @@ public class ApplicationProperties {
          * 版本
          */
         private String version;
+        /**
+         * 域名
+         */
+        private String domainName;
     }
 
     @Data
