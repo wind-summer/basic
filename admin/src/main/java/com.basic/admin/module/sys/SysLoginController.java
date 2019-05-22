@@ -93,11 +93,11 @@ public class SysLoginController {
     }
 
     /**
-     * 用户登陆操作
+     * 退出登录
      * @param login
      * @return
      */
-    @ApiOperation("登陆")
+    @ApiOperation("退出登录")
     @PostMapping("/sign_out")
     public ApiResult logOut(@RequestBody SysLogin login) {
 
