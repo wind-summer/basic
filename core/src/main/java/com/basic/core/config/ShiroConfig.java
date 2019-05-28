@@ -54,6 +54,7 @@ public class ShiroConfig {
 
         Map<String, String> filterMap = new LinkedHashMap<>();
         //登陆不需要认证
+        filterMap.put("/sys/file/**", "anon");
         filterMap.put("/sys/login/**", "anon");
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/druid/**", "anon");
