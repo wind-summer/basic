@@ -16,6 +16,7 @@ import com.basic.core.rabbitmq.entity.EmailMq;
 import com.basic.core.statemachine.entity.OrderEvents;
 import com.basic.core.statemachine.entity.OrderStates;
 import com.basic.core.utils.CurrentUserUtils;
+import com.basic.core.utils.SocketMessage;
 import com.basic.core.utils.SpringContextUtils;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +39,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.basic.core.mvc.controller.AbstractApiResultController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,6 +60,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @Api(description = "DEMO示例")
 public class DemoController extends AbstractApiResultController {
+
+    /**
+     * websochet消息发送对象
+     */
+    //private SimpMessagingTemplate messagingTemplate;
+
 
     private final DemoService demoService;
     private final ValueOperations valueOperations;
@@ -117,5 +131,31 @@ public class DemoController extends AbstractApiResultController {
 
 
     }
+
+
+//    //接收浏览器消息路径设置
+//    @MessageMapping("/send")
+//    //服务端向浏览器推送地址设置
+//    @SendTo("/topic/send")
+//    public SocketMessage send(SocketMessage message) throws Exception {
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        message.date = "浏览器消息";
+//        return message;
+//    }
+//
+//    //由后台发送到浏览器服务
+//    @SendTo("/topic/callback")
+//    //定时5秒给页面推一次数据
+//    @Scheduled(cron="0/5 * * * * ?")
+//    public Object callback() throws Exception {
+//        //测试页面显示后台消息推送次数
+//        int count=0;
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        System.out.println("推送消息了"+df.format(new Date()));
+//        //向页面这个地址推送消息
+//        messagingTemplate.convertAndSend("/topic/callback","客户端消息"+count );
+//        count++;
+//        return null;
+//    }
 }
 
