@@ -2,15 +2,14 @@ package com.basic.core.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.basic.core.module.sys.entity.SysConfig;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.basic.core.module.sys.dao.SysConfigDao;
-import com.basic.core.module.sys.entity.SysRole;
-import com.basic.core.module.sys.entity.SysRoleMenu;
+import com.basic.core.module.sys.entity.SysConfig;
 import com.basic.core.module.sys.redis.SysConfigRedis;
 import com.basic.core.module.sys.service.SysConfigService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +85,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfig> i
             idList.add(Long.valueOf(id));
         }
         this.baseMapper.deleteBatchIds(idList);
+    }
+
+    /**
+     * 根据code获取对象
+     *
+     * @return
+     */
+    @Override
+    public SysConfig getSysConfigByCode(String code) {
+        return this.selectOne(new EntityWrapper<SysConfig>().eq("code", code));
     }
 }

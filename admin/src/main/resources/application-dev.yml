@@ -18,6 +18,15 @@ spring:
         password: 123456
         url: jdbc:mysql://192.168.56.101:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.jdbc.Driver
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    username: wenlongfeia@163.com
+    password: wlf123456
+    port: 25
+    protocol: smtp
+    test-connection: true
+
   redis:
     # REDIS (RedisProperties)
     # Redis数据库索引（默认为0）

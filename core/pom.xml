@@ -45,6 +45,11 @@
             <artifactId>spring-statemachine-core</artifactId>
             <version>1.2.0.RELEASE</version>
         </dependency>
+        <!-- 支持发送邮件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!-- aop -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -110,6 +115,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatisplus.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
         </dependency>
         <!-- mysql jdbc -->
         <dependency>

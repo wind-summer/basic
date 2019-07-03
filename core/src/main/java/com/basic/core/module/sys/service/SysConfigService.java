@@ -40,4 +40,11 @@ public interface SysConfigService extends IService<SysConfig> {
      * @param ids
      */
     void deleteBatch(String ids);
+
+    /**
+     * 根据code获取对象
+     * @param code
+     * @return
+     */
+    SysConfig getSysConfigByCode(String code);
 }
