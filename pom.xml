@@ -3,24 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>basic</groupId>
-    <artifactId>basic</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>core</module>
-        <module>admin</module>
-    </modules>
-    <packaging>pom</packaging>
-
-    <name>basic</name>
-    <description>my project for Spring Boot</description>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.5.RELEASE</version>
     </parent>
+
+    <groupId>com.basic</groupId>
+    <artifactId>basic</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <description>my project for Spring Boot</description>
+
+    <modules>
+        <module>core</module>
+        <module>admin</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -44,20 +42,17 @@
         <kaptcha.version>0.0.9</kaptcha.version>
         <statemachine.version>1.2.0.RELEASE</statemachine.version>
         <fastjson.version>1.2.56</fastjson.version>
+        <statemachine.version>1.2.0.RELEASE</statemachine.version>
         <activiti.version>6.0.0</activiti.version>
         <hutool.version>4.5.9</hutool.version>
         <httpclient.version>4.5.8</httpclient.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-test</artifactId>-->
+<!--        </dependency>-->
         <!--SpringBoot开发工具 热启动 -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
