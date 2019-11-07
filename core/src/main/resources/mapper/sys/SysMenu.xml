@@ -15,7 +15,7 @@
     </resultMap>
 
     <select id="queryList" resultType="SysMenu">
-        select m.*,(select p.name from sys_menu p where p.menu_id = m.parent_id) as parentName
+        select m.*,(select p.name from sys_menu p where p.id = m.parent_id) as parentName
         from sys_menu m
         <choose>
             <when test="sidx != null and sidx.trim() != ''">

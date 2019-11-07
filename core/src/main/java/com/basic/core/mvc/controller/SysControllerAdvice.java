@@ -30,7 +30,7 @@ public class SysControllerAdvice {
     public Map errorHandler(Exception ex) {
         Map map = new HashMap();
         map.put("code", 500);
-        map.put("msg", "系统错误");
+        map.put("msg", ex.getMessage());
         return map;
     }
 

@@ -11,12 +11,12 @@ spring:
       master:
         username: root
         password: 123456
-        url: jdbc:mysql://192.168.56.101:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://49.234.209.174:3306/basic?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.jdbc.Driver
       slave_1:
         username: root
         password: 123456
-        url: jdbc:mysql://192.168.56.101:3306/framework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        url: jdbc:mysql://49.234.209.174:3306/basic?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.jdbc.Driver
   mail:
     default-encoding: UTF-8
@@ -25,13 +25,13 @@ spring:
     password: wlf123456
     port: 25
     protocol: smtp
-    test-connection: true
+    test-connection: false
 
   redis:
     # REDIS (RedisProperties)
     # Redis数据库索引（默认为0）
     database: 0
-    host: 192.168.56.101         # Redis服务器地址
+    host: 49.234.209.174         # Redis服务器地址
     port: 6379                   # Redis服务器连接端口
     password:                    # Redis服务器连接密码（默认为空）
     jedis:
@@ -40,17 +40,17 @@ spring:
         max-idle: 8            # 连接池中的最大空闲连接
         max-wait: -1ms         # 连接池最大阻塞等待时间（使用负值表示没有限制）
         min-idle: 5            # 连接池中的最小空闲连接
-  rabbitmq:
-    host: 192.168.56.101
-    port: 5672
-    username: admin
-    password: admin
-    publisher-confirms: true   # 消息发送到交换机确认机制,是否确认回调
-    listener:
-      simple:
-        concurrency: 10
-        max-concurrency: 20
-        prefetch: 5
+#  rabbitmq:
+#    host: 192.168.56.101
+#    port: 5672
+#    username: admin
+#    password: admin
+#    publisher-confirms: true   # 消息发送到交换机确认机制,是否确认回调
+#    listener:
+#      simple:
+#        concurrency: 10
+#        max-concurrency: 20
+#        prefetch: 5
 
 mybatis-plus:
   global-config:
